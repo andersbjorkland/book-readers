@@ -5,9 +5,10 @@ const GoogleBooksParser = (queryResult) => {
             authors: item.volumeInfo.authors,
             rating: item.volumeInfo.averageRating,
             categories: item.volumeInfo.categories,
+            description: item.volumeInfo.description,
             images: {
-                small: item.volumeInfo.imageLinks.smallThumbnail,
-                thumbnail: item.volumeInfo.imageLinks.thumbnail
+                small: item.volumeInfo.imageLinks ? item.volumeInfo.imageLinks.smallThumbnail : null,
+                thumbnail: item.volumeInfo.imageLinks ? item.volumeInfo.imageLinks.thumbnail : null
             },
             pages: item.volumeInfo.pageCount,
             publishedAt: item.volumeInfo.publishedDate,

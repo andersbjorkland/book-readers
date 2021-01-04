@@ -1,6 +1,7 @@
+import { Link } from "react-router-dom";
 import { Wrapper } from "./Pagination.styles";
 
-const Pagination = ({resultsPerPage, numberOfResults, onClick, currentPage = 1}) => {
+const Pagination = ({resultsPerPage, numberOfResults, baseUrl, currentPage = 1}) => {
     let lastPage = parseInt(numberOfResults/resultsPerPage);
     if (numberOfResults % resultsPerPage > 0) {
         lastPage++;
@@ -14,19 +15,22 @@ const Pagination = ({resultsPerPage, numberOfResults, onClick, currentPage = 1})
         limitDown = lastPage - 5;
     }
 
-    let limitUp = currentPage + 2;
-    limitUp = limitUp > lastPage ? lastPage : limitUp;
+    let limitUp = currentPage + 2 <= lastPage ? currentPage + 2 : lastPage;
     if (limitUp < 5 && 5 <= lastPage) {
         limitUp = 5;
     }
 
+    if (limitDown > 1) {
+        pages.push(<Link key={1} to={baseUrl + 1}>{'|<'}</Link>);
+    }
+
     if (lastPage > 1) {
         for (let i = limitDown; i <= limitUp; i++) {
-            pages.push(<button key={i} onClick={() => onClick(i)}>{i}</button>);
+            pages.push(<Link key={i} to={baseUrl + i}>{i}</Link>);
         }
     }
 
-
+    console.log(limitDown, currentPage, limitUp);
 
     return (
         <Wrapper>
