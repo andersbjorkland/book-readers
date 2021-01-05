@@ -2,12 +2,14 @@ import './App.css';
 import SearchBar from "./Components/SearchBar";
 import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
 import ResultsPage from "./Pages/ResultsPage";
+import { GlobalStyle } from './GlobalStyle';
 
 
 function App() {
   
   return (
     <Router>
+      <GlobalStyle />
       <div className="App">
         <h1>Book Readers</h1>
         <SearchBar baseUrl="/search" />

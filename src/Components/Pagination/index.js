@@ -30,8 +30,6 @@ const Pagination = ({resultsPerPage, numberOfResults, baseUrl, currentPage = 1})
         }
     }
 
-    console.log(limitDown, currentPage, limitUp);
-
     return (
         <Wrapper>
             {pages}

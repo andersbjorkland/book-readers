@@ -1,8 +1,10 @@
+import { Wrapper } from "./ItemSummary.styles";
+
 const ItemSummary = (props) => {
     return (
-        <div>
+        <Wrapper>
             {props.children}
-        </div>
+        </Wrapper>
     );
 }
 

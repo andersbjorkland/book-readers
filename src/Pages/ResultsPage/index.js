@@ -4,6 +4,7 @@ import BookSummary from "../../Components/BookSummary";
 import Pagination from "../../Components/Pagination";
 import Results from "../../Components/Results";
 import GoogleBooksSearcher from "../../Utilities/GoogleBooksSearcher";
+import { Wrapper } from "./ResultsPage.styles";
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);
@@ -14,7 +15,6 @@ const ResultsPage = () => {
     const page = query.get("p") ? query.get("p") : 1;
 
     const searchQuery = query.get("q");
-    console.log(searchQuery, page);
 
     const RESULTS_PER_PAGE = 10;
 
@@ -26,7 +26,6 @@ const ResultsPage = () => {
     useEffect(() => {
       setCurrentPage(parseInt(page));
       if (searchQuery) {
-        console.log("Searching for: " + searchQuery)
         GoogleBooksSearcher(setBooks, setNumOfResults, searchQuery, RESULTS_PER_PAGE * (page - 1));
       }
     }, [searchQuery, page]);
@@ -45,7 +44,7 @@ const ResultsPage = () => {
       }, [books]);
 
     return (
-        <div>
+        <Wrapper>
             <h2>Results</h2>
             <Results results={resultComponents} />
             <Pagination 
@@ -54,7 +53,7 @@ const ResultsPage = () => {
                 baseUrl={"/search?q=" + searchQuery + "&p="}
                 currentPage={currentPage}
             />
-        </div>
+        </Wrapper>
     );
 }
 

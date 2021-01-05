@@ -1,8 +1,10 @@
+import { Wrapper } from "./Results.styles";
+
 const Results = ({results}) => {
     return (
-        <div>
+        <Wrapper>
             {results}
-        </div>
+        </Wrapper>
     );
 }
 
