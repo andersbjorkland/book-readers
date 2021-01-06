@@ -1,6 +1,7 @@
 import {useEffect, useState} from "react";
 import {useLocation} from "react-router-dom";
 import BookSummary from "../../Components/BookSummary";
+import LoadingIndicator from "../../Components/LoadingIndicator";
 import Pagination from "../../Components/Pagination";
 import Results from "../../Components/Results";
 import GoogleBooksSearcher from "../../Utilities/GoogleBooksSearcher";
@@ -22,12 +23,15 @@ const ResultsPage = () => {
     const [numOfResults, setNumOfResults] = useState(null);
     const [currentPage, setCurrentPage] = useState(parseInt(page));
     const [resultComponents, setResultComponents] = useState(null);
+    const [isFetching, setIsFetching] = useState(false);
 
     useEffect(() => {
       setCurrentPage(parseInt(page));
       if (searchQuery) {
-        GoogleBooksSearcher(setBooks, setNumOfResults, searchQuery, RESULTS_PER_PAGE * (page - 1));
+        setIsFetching(true);
+        GoogleBooksSearcher(setIsFetching, setBooks, setNumOfResults, searchQuery, RESULTS_PER_PAGE * (page - 1));
       }
+
     }, [searchQuery, page]);
 
     useEffect(() => {
@@ -46,7 +50,8 @@ const ResultsPage = () => {
     return (
         <Wrapper>
             <h2>Results</h2>
-            <Results results={resultComponents} />
+            {isFetching ? <LoadingIndicator /> : <Results results={resultComponents} />}
+            
             <Pagination 
                 resultsPerPage={RESULTS_PER_PAGE} 
                 numberOfResults={numOfResults} 

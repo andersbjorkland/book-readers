@@ -2,6 +2,7 @@ import { useState} from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCoffee} from "@fortawesome/free-solid-svg-icons";
 import { Link, Redirect } from "react-router-dom";
+import { Wrapper } from "./SearchBar.styles";
 
 const SearchBar = ({baseUrl}) => {
     const [searchValue, setSearchValue] = useState("");
@@ -24,11 +25,11 @@ const SearchBar = ({baseUrl}) => {
     }
 
     return (
-        <div>
-            <input type="text" onKeyUp={handleSearchValue} onKeyDown={handleTextEnter} placeholder={searchValue}/>
-            <Link to={baseUrl + "?q=" + searchValue}><FontAwesomeIcon icon={faCoffee}/>Search</Link>
+        <Wrapper>
+            <input className="text-input" type="text" onKeyUp={handleSearchValue} onKeyDown={handleTextEnter} placeholder={searchValue}/>
+            <Link className="button" to={baseUrl + "?q=" + searchValue}><FontAwesomeIcon icon={faCoffee}/>Search</Link>
             {shouldRedirect ? <Redirect to={baseUrl + "?q=" + searchValue} /> : null}
-        </div>
+        </Wrapper>
     );
 }
 

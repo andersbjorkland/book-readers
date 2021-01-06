@@ -1,6 +1,6 @@
 import GoogleBooksParser from "./GoogleBooksParser";
 
-const GoogleBooksSearcher = (setBooks, setNumOfResults, query, startIndex=0) => {
+const GoogleBooksSearcher = (setIsFetching, setBooks, setNumOfResults, query, startIndex=0) => {
     // Misc options for queries:
     // Restrict to a specific language: '&langRestrict=en'
     // Read more at: https://developers.google.com/books/docs/v1/using
@@ -18,7 +18,8 @@ const GoogleBooksSearcher = (setBooks, setNumOfResults, query, startIndex=0) => 
             (error) => {
                 console.log(error);
             }   
-        );
+        )
+        .then(() => setIsFetching(false));
 }
 
 export default GoogleBooksSearcher;
