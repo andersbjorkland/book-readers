@@ -5,7 +5,7 @@ import LoadingIndicator from "../../Components/LoadingIndicator";
 import Pagination from "../../Components/Pagination";
 import Results from "../../Components/Results";
 import GoogleBooksSearcher from "../../Utilities/GoogleBooksSearcher";
-import { Wrapper } from "./ResultsPage.styles";
+import {Wrapper, Container} from "../PageLayout";
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);
@@ -49,7 +49,8 @@ const ResultsPage = () => {
 
     return (
         <Wrapper>
-            <h2>Results</h2>
+          <Container>
+            {resultComponents ? <h2>Results</h2> : isFetching ? <h2>Results</h2> : null}
             {isFetching ? <LoadingIndicator /> : <Results results={resultComponents} />}
             
             <Pagination 
@@ -58,6 +59,7 @@ const ResultsPage = () => {
                 baseUrl={"/search?q=" + searchQuery + "&p="}
                 currentPage={currentPage}
             />
+          </Container>
         </Wrapper>
     );
 }

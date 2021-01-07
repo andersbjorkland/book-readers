@@ -26,13 +26,14 @@ const Pagination = ({resultsPerPage, numberOfResults, baseUrl, currentPage = 1})
 
     if (lastPage > 1) {
         for (let i = limitDown; i <= limitUp; i++) {
-            pages.push(<Link key={i} to={baseUrl + i}>{i}</Link>);
+            pages.push(<Link className={currentPage === i ? "active" : ""} key={i} to={baseUrl + i}>{i}</Link>);
         }
     }
 
     return (
         <Wrapper>
             {pages}
+            {limitUp < lastPage ? ". . ." : null}
         </Wrapper>
     );
 }
