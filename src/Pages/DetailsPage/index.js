@@ -1,6 +1,6 @@
 import {useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
-import { Container, Wrapper } from "../PageLayout";
+import { Container, Flexed, Header, Wrapper } from "../PageLayout";
 import ParseGoogleBookToBook from "../../Utilities/ParseGoogleBookToBook";
 import ParseAuthorsToComponent from "../../Utilities/ParseAuthorsToComponent";
 import ParseCategoriesToComponent from "../../Utilities/ParseCategoriesToComponent";
@@ -48,12 +48,21 @@ const DetailsPage = () => {
     return (
         <Wrapper>
             <Container>
-                {book.images.medium ? <img src={book.images.medium.replace("http:", "https:")} alt=""/> : <div className="img-placeholder"></div>}
-                <h1>{book.title}</h1>
-                {ParseAuthorsToComponent(book.authors)}
-                <p>{book.publishedAt}</p>
-                <p>{book.description}</p>
-                {ParseCategoriesToComponent(book.categories)}
+                <Header>
+                    <h1>{book.title}</h1>
+                </Header>
+                <Flexed>
+                    {book.images.small ? <img src={book.images.small.replace("http:", "https:")} alt=""/> : <div className="img-placeholder"></div>}
+                    <div className="summary">
+                        <h2>{ParseAuthorsToComponent(book.authors)}</h2>
+                        <p><time>{book.publishedAt}</time></p>
+                        
+                        <div className="cursive">
+                            {ParseCategoriesToComponent(book.categories)}
+                        </div>
+                    </div>
+                </Flexed>
+                <div dangerouslySetInnerHTML={{__html: book.description}} />
             </Container>
         </Wrapper>
     );
