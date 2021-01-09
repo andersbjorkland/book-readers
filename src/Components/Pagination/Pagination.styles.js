@@ -12,14 +12,6 @@ export const Wrapper = styled.div`
         
         &.active {
             font-weight: bold;
-
-            &:visited {
-                color: var(--lighterBlue);
-            }
-        }
-
-        &:visited {
-            color: var(--purple);
         }
     }
 `;
