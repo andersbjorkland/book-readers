@@ -23,6 +23,7 @@ export const GlobalStyle = createGlobalStyle`
         p {
             font-family: 'Montserrat', sans-serif;
         }
+
     }
 
     * {
@@ -33,6 +34,18 @@ export const GlobalStyle = createGlobalStyle`
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
+    }
+
+    .margin-left--auto {
+        margin-left: auto;
+    }
+
+    .md-width {
+        max-width: 800px;
+    }
+
+    .m-center {
+        margin: auto;
     }
 
     a.button, .button {

@@ -47,12 +47,12 @@ const DetailsPage = () => {
 
     return (
         <Wrapper>
-            <Container>
+            <Container className="md-width">
                 <Header>
                     <h1>{book.title}</h1>
                 </Header>
                 <Flexed>
-                    {book.images.small ? <img src={book.images.small.replace("http:", "https:")} alt=""/> : <div className="img-placeholder"></div>}
+                    {book.images.small ? <img className="m-center" src={book.images.small.replace("http:", "https:")} alt=""/> : <div className="img-placeholder"></div>}
                     <div className="summary">
                         <h2>{ParseAuthorsToComponent(book.authors)}</h2>
                         <p><time>{book.publishedAt}</time></p>
@@ -62,7 +62,7 @@ const DetailsPage = () => {
                         </div>
                     </div>
                 </Flexed>
-                <div dangerouslySetInnerHTML={{__html: book.description}} />
+                <div className="m-center" dangerouslySetInnerHTML={{__html: book.description}} />
             </Container>
         </Wrapper>
     );

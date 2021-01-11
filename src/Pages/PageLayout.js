@@ -33,6 +33,7 @@ export const Header = styled.div`
     display: flex;
     flex-direction: column;
     margin-bottom: 2rem;
+    text-align: center;
 
     h1 {
         margin: 0;
