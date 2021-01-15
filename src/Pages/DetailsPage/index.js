@@ -12,7 +12,7 @@ const DetailsPage = () => {
     const [isFetching, setIsFetching] = useState(false);
     
     useEffect(() => {
-        const target = 'https://books.andersbjorkland.online/api/details/' + id;
+        const target = 'https://books.andersbjorkland.online/book-api/details/' + id;
         setIsFetching(true);
         fetch(target)
             .then(res => res.json())

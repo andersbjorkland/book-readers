@@ -26,7 +26,7 @@ const ParseGoogleBookToBook = (googleBook) => {
 
 const parseImageUrls = (imageLink) => {
     let originalTarget = "books.google.com/books/content?id="
-    let imageTarget = "books.andersbjorkland.online/api/images/"
+    let imageTarget = "books.andersbjorkland.online/book-api/images/"
     return imageLink.replace(originalTarget, imageTarget);
 }
 

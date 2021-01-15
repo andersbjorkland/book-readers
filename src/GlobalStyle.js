@@ -6,16 +6,20 @@ export const GlobalStyle = createGlobalStyle`
         --offWhite: #f2f2f2;
         --blue: #04151F;
         --lighterBlue: #184166;
+        --whiteBlue: #e8f0ff;
         --green: #183A37;
+        --lightGreen: #68eded;
         --beige: #EFD6AC;
         --orange: #C44900;
         --purple: #432534;
 
-        // SISEZ
+        // SIZES
         --mediumText: 17px;
 
+        // DIMENSIONS
+        --maxWidth: 800px;
+
         background-color: var(--offWhite);
-        padding: 1rem;
 
         h1, h2, h3, h4, h5, h6 {
             font-family: 'Crimson Text', serif;
@@ -24,6 +28,16 @@ export const GlobalStyle = createGlobalStyle`
             font-family: 'Montserrat', sans-serif;
         }
 
+    }
+
+    .app-container {
+        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+
+        h1 {
+            text-align: center;
+        }
     }
 
     * {
@@ -61,6 +75,11 @@ export const GlobalStyle = createGlobalStyle`
         &:hover {
             background-color: var(--lighterBlue);
         }
+    }
+
+    .flex-column {
+        display: flex;
+        flex-direction: column;
     }
 
 `;
