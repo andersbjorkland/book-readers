@@ -33,11 +33,9 @@ const AuthorsParser = (authorsArray) => {
     }
 
     return (
-        <div className="flex-row">
-            <p>
-                {authors}
-            </p>
-        </div>
+        <span>
+            {authors}
+        </span>
     );
 }
 
