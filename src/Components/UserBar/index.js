@@ -1,33 +1,29 @@
-import { useEffect, useState } from "react";
+import { Component, useEffect, useState } from "react";
+import { connect } from "react-redux";
 import { useAuthState } from "../../Context";
 import Logout from "../UIButtons/Logout";
 import { BarWrapper, InnerContainer } from "./UserBar.styles";
 
-const UserBar = () => {
-    const {userDetails} = useAuthState();
-    const [userAlias, setUserAlias] = useState(null);
+class UserBar extends Component {
 
-    
+    render() {
+        if (!this.props.userReducer.user) {
+            return null;
+        }
 
-    useEffect(() => {
-        setUserAlias(userDetails.user);
-        
-    }, [userDetails]);
-
-    console.log(userDetails);
-
-    if (!userAlias) {
-        return null;
+        return (
+            <BarWrapper>
+                <InnerContainer>
+                    <p>{this.props.userReducer.user}</p>
+                    <Logout />
+                </InnerContainer>
+            </BarWrapper>
+        );
     }
 
-    return (
-        <BarWrapper>
-            <InnerContainer>
-                <p>{userAlias}</p>
-                <Logout />
-            </InnerContainer>
-        </BarWrapper>
-    );
+    
 }
 
-export default UserBar;
+const mapStateToProps = (state) => ({...state});
+
+export default connect(mapStateToProps)(UserBar);

@@ -1,6 +1,8 @@
-import {useEffect, useState} from "react";
-import {useHistory} from "react-router";
-import { loginUser, useAuthDispatch, useAuthState } from "../../Context";
+import {Component, useEffect, useState} from "react";
+import { connect, useDispatch } from "react-redux";
+import {Redirect, useHistory} from "react-router";
+import { loginUser } from "../../Redux/authActions";
+//import { loginUser, useAuthDispatch, useAuthState } from "../../Context";
 import Form from "../Form";
 import LoadingIndicator from "../LoadingIndicator";
 import MessageContainer from "../MessageContainer";
@@ -8,93 +10,85 @@ import ErrorMessage from "../Messages/ErrorMessage";
 import InfoMessage from "../Messages/InfoMessage";
 import { Wrapper } from "./Login.styles";
 
-const Login = (props) => {
+class Login extends Component {
 
-    const [email, setEmail] = useState(null);
-    const [password, setPassword] = useState(null);
-    const [success, setSuccess] = useState(false);
-
-    const [messages, setMessages] = useState([]);
-    const [messageKey, setMessageKey] = useState(0);
-
-    const dispatch = useAuthDispatch();
-    const { loading, errorMessage, userDetails } = useAuthState();
-    const history = useHistory();
-
-    useEffect(() => {
-        if (errorMessage) {
-            updateErrors();
+    constructor(props) {
+        super(props);
+        this.state = {
+            email: "",
+            password: "",
+            messages: null,
+            loading: false,
+            shouldRedirectToUser: false,
         }
-    },[errorMessage]);
-
-    const updateErrors = () => {
-        const messageArr = [];
-        messageArr.push(<ErrorMessage key={messageKey}><p>{errorMessage}</p></ErrorMessage>);
-        setMessages(messageArr);
-        setMessageKey(messageKey + 1);
+        this.handleLogin = this.handleLogin.bind(this);
+        this.redirectOnLogin = this.redirectOnLogin.bind(this);
     }
 
-    const handleLogin = async (e) => {
+    handleLogin = (e) => {
         e.preventDefault();
-        let payload = {email, password};
-        try {
-            let response = await loginUser(dispatch, payload); //loginUser action makes the request and handles all the neccessary state changes
-            if (!response || !response.user) {
-                if (errorMessage) {
-                    updateErrors();
-                }
-                return;
-            }
-            setSuccess(true);
-            redirectOnLogin();
-        } catch (error) {
-            console.log(error);
-        }
+        console.log("Logging in...");
+        const payload = {email: this.state.email, password: this.state.password};
+
+        this.props.loginUser(payload);
     }
 
-    const inputEmail = (event) => {
-        setEmail(event.target.value);
+    inputEmail = (event) => {
+        this.setState({email: event.target.value});
     }
   
-    const inputPassword = (event) => {
-        setPassword(event.target.value);
+    inputPassword = (event) => {
+        this.setState({password: event.target.value});
     }
 
-    const redirectOnLogin = () => {
+    redirectOnLogin = () => {
         setTimeout(() => {
-            history.push('/');
+            //useHistory().push('/');
+            this.setState({shouldRedirectToUser: true});
         }, 5000);
     }
 
-    if (success) {
-       return <MessageContainer><InfoMessage>You have successfully logged in! Redirecting to Home.</InfoMessage></MessageContainer>
+    render() {
+        if (this.state.shouldRedirectToUser) {
+            return <Redirect to="/user" />;
+        }
+
+        if (this.props.userReducer.token) {
+            this.redirectOnLogin();
+            return <MessageContainer><InfoMessage>You have successfully logged in! Redirecting to Home.</InfoMessage></MessageContainer>
+        }
+
+        return (
+            <Form onSubmit={this.handleLogin}>
+                <Wrapper>
+                    <div>
+                        <label htmlFor="email">Email</label>
+                        <input id="email" name="email" type="email" onKeyUp={this.inputEmail} />
+                    </div>
+
+                    <div>
+                        <label htmlFor="password">Password</label>
+                        <input id="password" name="password" type="password" onKeyUp={this.inputPassword}/>
+                    </div>
+
+                    <input type="submit" />
+
+                </Wrapper>
+
+                {this.props.userReducer.isLoading ? <LoadingIndicator />  : null}
+                { this.props.userReducer.message ? <MessageContainer>{this.props.userReducer.message}</MessageContainer> : null }
+            </Form>
+        );
     }
-
-    if (userDetails && userDetails.user) {
-        return <InfoMessage>You are already logged in.</InfoMessage>;
-    }
-
-    return (
-        <Form onSubmit={handleLogin}>
-            <Wrapper>
-                <div>
-                    <label htmlFor="email">Email</label>
-                    <input id="email" name="email" type="email" onKeyUp={inputEmail} />
-                </div>
-
-                <div>
-                    <label htmlFor="password">Password</label>
-                    <input id="password" name="password" type="password" onKeyUp={inputPassword}/>
-                </div>
-
-                <input type="submit" />
-
-            </Wrapper>
-
-            {loading ? <LoadingIndicator />  : null}
-            { messages ? <MessageContainer>{messages}</MessageContainer> : null }
-        </Form>
-    );
 }
 
-export default Login;
+
+const mapStateToProps = state => {
+    return {...state}
+};
+
+const mapDispatchToProps = dispatch => ({
+    loginUser: (payload) => dispatch(loginUser(payload))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

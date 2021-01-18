@@ -1,5 +1,8 @@
+import { Component } from "react";
+import { connect } from "react-redux";
 import styled from "styled-components";
 import { logout, useAuthDispatch } from "../../Context";
+import { logoutUser } from "../../Redux/authActions";
 
 const Button = styled.button`
     height: 2rem;
@@ -8,16 +11,28 @@ const Button = styled.button`
     border: none;
 `;
 
-const Logout = () => {
-    const dispatch = useAuthDispatch();
-
-    const handleLogout = () => {
-        logout(dispatch);
+class Logout extends Component {
+    
+    constructor(props) {
+        super(props);
+        this.handleLogout = this.handleLogout.bind(this);
     }
 
-    return (
-        <Button onClick={handleLogout}>Logout</Button>
-    );
+    handleLogout = () => {
+        console.log("Logging out");
+        this.props.logout();
+    }
+
+    render() {
+        return (
+            <Button onClick={this.handleLogout}>Logout</Button>
+        );
+    }
 }
 
-export default Logout;
+const mapStateToProps = state => ({...state});
+const mapDispatchToProps = dispatch => ({
+    logout: () => dispatch(logoutUser())
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Logout);
