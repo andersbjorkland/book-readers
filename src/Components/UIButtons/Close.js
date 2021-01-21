@@ -1,3 +1,4 @@
+import { useState } from "react";
 import styled from "styled-components";
 
 const Wrapper = styled.div`
@@ -9,9 +10,36 @@ const Wrapper = styled.div`
     justify-content: center;
     align-items: center;
 
-    position: absolute;
-    top: 0.5em;
-    right: 0.5em;
+    /* position: absolute; */
+    /* top: 0.5em;
+    right: 0.5em; */
+
+    &.close-animation {
+        &>.left {
+            animation: circlingL 2s linear infinite;
+
+            @keyframes circlingL {
+                0% {
+                    transform: rotate(45deg);
+                }
+                100% {
+                    transform: rotate(405deg);
+                }
+            }
+        }
+        &>.right {
+            animation: circlingR 2s linear infinite;
+
+            @keyframes circlingR {
+                0% {
+                    transform: rotate(-45deg);
+                }
+                100% {
+                    transform: rotate(315deg);
+                }
+            }
+        }
+    }
 `;
 
 const Line = styled.div`
@@ -26,11 +54,22 @@ const Line = styled.div`
     &.right {
         transform: rotate(45deg);
     }
+
 `;
 
-const Close = ({onClose}) => {
+const Close = ({onClose, animateOnClick}) => {
+    const [shouldAnimate, setShouldAnimate] = useState(false);
+    const handleClick = () => {
+        console.log("Close was clicked.", animateOnClick);
+        if (animateOnClick) {
+            console.log("Setting animation on.");
+            setShouldAnimate(true);
+        }
+        onClose();
+    }
+
     return (
-        <Wrapper onClick={onClose}>
+        <Wrapper className={shouldAnimate ? "close-animation" : ""} onClick={handleClick}>
             <Line className="left" />
             <Line className="right"/>
         </Wrapper>

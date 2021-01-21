@@ -24,12 +24,11 @@ class AppRoute extends Component {
                 />
             );
         } 
-
         return (
             <Route
                 path={this.state.path}
                 render={props => {
-                    return <this.state.component {...props} />;
+                    return <this.state.component key={window.location.search} {...props} />;
                 }}
                 {...this.state.rest}
             />

@@ -1,42 +1,61 @@
-import { useState } from "react";
+import { Component, useState } from "react";
+import { connect } from "react-redux";
 import { useAuthDispatch, useAuthState } from "../../Context";
 import { removeToRead } from "../../Context/actions";
+import { removeBookToRead } from "../../Redux/bookActions";
 import AuthorsParser from "../../Utilities/ParseAuthorsToComponent";
 import LoadingIndicator from "../LoadingIndicator";
-import { Wrapper } from "./ToRead.styles";
+import ButtonWithLoading from "../UIButtons/ButtonWithLoading";
+import Close from "../UIButtons/Close";
+import { ControlsContainer, Wrapper } from "./ToRead.styles";
 
-const ToRead = ({book}) => {
+class ToRead extends Component {
 
-    const dispatch = useAuthDispatch();
-    const {userDetails} = useAuthState();
-    const [isLoading, setIsLoading] = useState(false);
-
-    const handleRemove = async () => {
-        setIsLoading(true);
-        console.log("Removing with id: " + book.id);
-        const payload = {
-            volumeId: book.id,
-            auth_token: userDetails.auth_token
-        }
-
-        try {
-            let response = await removeToRead(dispatch, payload);
-            if (!response) {
-              return;
-            } else {
-              setIsLoading(false);
-            }
-          } catch (error) {
-            console.log(error);
-          }
+  constructor(props) {
+    super(props);
+    this.state = {
+      isLoading: false
     }
+  }
 
+  handleRemove = async () => {
+    this.setState({isLoading: true});
+    console.log("Removing with id: " + this.props.book.id);
+
+    const token = this.props.userReducer.token;
+    if (token) {
+      try {
+        let response = await this.props.removeToRead(token, this.props.book);
+        if (!response) {
+          return;
+        } else {
+          this.setState({isLoading: false});
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    } 
+  }
+
+  render() {
+    const book = this.props.book;
     return (
         <Wrapper>
-            <p>{book.title} ({book.publishedAt.substr(0, 4)}) by {AuthorsParser(book.authors)}</p>
-            {isLoading ? <LoadingIndicator /> : <button onClick={handleRemove}>Remove</button>}
+          <ControlsContainer>
+            <Close onClose={this.handleRemove} animateOnClick={true} />
+          </ControlsContainer>
+          <div>
+            <p>{book.title} ({book.publishedAt ? book.publishedAt.substr(0, 4) : "N/A"}) by {AuthorsParser(book.authors)}</p>
+          </div>
+            
         </Wrapper>
     );
+  }
 }
 
-export default ToRead;
+const mapStateToProps = state => ({...state});
+const mapDispatchToProps = dispatch => ({
+  removeToRead: (token, book) => dispatch(removeBookToRead(token, book))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ToRead);

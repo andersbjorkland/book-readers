@@ -1,8 +1,9 @@
 import { useState} from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCoffee} from "@fortawesome/free-solid-svg-icons";
-import { Link, Redirect } from "react-router-dom";
+import { Link, Redirect, useHistory, useLocation } from "react-router-dom";
 import { Wrapper } from "./SearchBar.styles";
+import useQuery from "../../Hooks/useQuery";
 
 const SearchBar = ({baseUrl}) => {
     const [searchValue, setSearchValue] = useState("");
@@ -12,6 +13,10 @@ const SearchBar = ({baseUrl}) => {
         setSearchValue(event.target.value);
     }
 
+    const query = useQuery();
+    const history = useHistory();
+    const location = useLocation();
+
     /*
      * Upon pressing enter the search query should be executed. 
      * This is handled by setting a shouldRedirect variable to render a redirect component for React Router.
@@ -19,8 +24,12 @@ const SearchBar = ({baseUrl}) => {
      */
     const handleTextEnter = (event) => {
         if (event.key === 'Enter') {
-            setShouldRedirect(true);
-            setTimeout(() => setShouldRedirect(false), 250);
+            console.log();
+
+            console.log("Enter was pressed");
+            // setShouldRedirect(true);
+            // setTimeout(() => setShouldRedirect(false), 500);
+            history.push(baseUrl + "?q=" + searchValue);
         }
     }
 
@@ -28,7 +37,7 @@ const SearchBar = ({baseUrl}) => {
         <Wrapper>
             <input className="text-input" type="text" onKeyUp={handleSearchValue} onKeyDown={handleTextEnter} placeholder={searchValue}/>
             <Link className="button" to={baseUrl + "?q=" + searchValue}><FontAwesomeIcon icon={faCoffee}/>Search</Link>
-            {shouldRedirect ? <Redirect to={baseUrl + "?q=" + searchValue} /> : null}
+            {shouldRedirect ? <Redirect to={{pathname: baseUrl, search: "?q=" + searchValue, state: {referrer: window.location.pathname}}} /> : null}
         </Wrapper>
     );
 }

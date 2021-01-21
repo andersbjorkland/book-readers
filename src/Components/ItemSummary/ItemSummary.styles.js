@@ -17,6 +17,7 @@ export const Content = styled.div`
     display: flex;
     flex-direction: column;
     padding: ${ITEM_PADDING};
+    height: 100%;
 
     h3 {
         font-size: 0.9em;

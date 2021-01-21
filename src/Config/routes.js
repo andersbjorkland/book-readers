@@ -29,6 +29,7 @@ const routes = [
     },
     {
         path: '/search',
+        key: window.location.pathname,
         component: ResultsPage,
         isPrivate: false
     },

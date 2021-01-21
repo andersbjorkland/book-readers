@@ -1,10 +1,8 @@
-import { LOAD_USER_DATA, LOAD_USER_DATA_FAIL, LOAD_USER_DATA_SUCCESS, LOGIN_USER, LOGIN_USER_FAIL, LOGIN_USER_SUCCESS, LOGOUT_USER } from "../actionTypes";
+import { AUTH_VALIDATION, LOAD_USER_DATA, LOAD_USER_DATA_FAIL, LOAD_USER_DATA_SUCCESS, LOGIN_USER, LOGIN_USER_FAIL, LOGIN_USER_SUCCESS, LOGOUT_USER } from "../actionTypes";
 
 const initialState = {
     token: null || localStorage.getItem('token'),
     user: null || localStorage.getItem('user'),
-    toRead: null,
-    example: "Reading from Redux Store.",
     isLoading: false,
     isLoadingUserData: false,
     message: null
@@ -12,8 +10,26 @@ const initialState = {
 
 const userReducer = (state = initialState, action) => {
     switch(action.type) {
+        case AUTH_VALIDATION: {
+            if (action.payload.status >= 300) {
+                localStorage.removeItem('token');
+                localStorage.removeItem('user');
+                return {
+                    ...state,
+                    user: null,
+                    token: null
+                }
+            }
+            
+            localStorage.setItem('token', action.payload.token);
+            localStorage.setItem('user', action.payload.user);
+            return {
+                ...state,
+                user: action.payload.user,
+                token: action.payload.token
+            }
+        }
         case LOGIN_USER: {
-            console.log("Logging in (reducer)");
             return {...state, isLoading: true}
         }
         case LOGIN_USER_FAIL: {
@@ -26,7 +42,6 @@ const userReducer = (state = initialState, action) => {
             localStorage.setItem('token', token);
             localStorage.setItem('user', user);
 
-            console.log(action);
             return {
                 ...state, 
                 isLoading: false,
@@ -35,6 +50,9 @@ const userReducer = (state = initialState, action) => {
             }
         }
         case LOGOUT_USER: {
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+
             return {
                 ...state,
                 token: null,
@@ -48,15 +66,16 @@ const userReducer = (state = initialState, action) => {
             }
         }
         case LOAD_USER_DATA_SUCCESS: {
-            console.log(action);
+
+            const toRead = action.payload.toRead;
+            localStorage.setItem('toRead', JSON.stringify(toRead));
             return {
                 ...state,
                 isLoadingUserData: false,
-                toRead: action
+                toRead: [...toRead]
             }
         }
         case LOAD_USER_DATA_FAIL: {
-            console.log(action);
             return {
                 ...state,
                 isLoadingUserData: false,

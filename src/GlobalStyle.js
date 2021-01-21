@@ -54,6 +54,10 @@ export const GlobalStyle = createGlobalStyle`
         margin-left: auto;
     }
 
+    .mt-auto {
+        margin-top: auto;
+    }
+
     .md-width {
         max-width: 800px;
     }

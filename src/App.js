@@ -20,7 +20,8 @@ function App() {
         <h1>Book Readers</h1>
         <SearchBar baseUrl="/search" />
         <Switch>
-          {routes.map((route) => (
+          {routes.map((route) => {
+            return (
             <AppRoute
               exact={route.exact ? true : false}
               key={route.path}
@@ -28,7 +29,7 @@ function App() {
               component={route.component} 
               isPrivate={route.isPrivate}
             />
-          ))}
+          )})}
         </Switch>
       </div>
     </Router>

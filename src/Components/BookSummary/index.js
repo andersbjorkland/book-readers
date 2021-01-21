@@ -4,56 +4,74 @@ import AuthorsParser from "../../Utilities/ParseAuthorsToComponent";
 import CategoriesParser from "../../Utilities/ParseCategoriesToComponent";
 import { Link } from "react-router-dom";
 import { useAuthDispatch, useAuthState } from "../../Context";
-import { useEffect, useState } from "react";
+import { Component, useEffect, useState } from "react";
 import { addToRead } from "../../Context/actions";
+import { connect } from "react-redux";
+import { addBookToRead } from "../../Redux/bookActions";
+import { render } from "@testing-library/react";
+import ButtonWithLoading from "../UIButtons/ButtonWithLoading";
 
-const BookSummary = ({book}) => {
-  const {userDetails} = useAuthState();
-  const [addToReadButton, setAddToReadButton] = useState(null);
-  const volumeId = book.id;
-  const dispatch = useAuthDispatch();
+class BookSummary extends Component {
 
-  const handleAddToRead = async () => {
-    const payload = {
-      volumeId: volumeId,
-      auth_token: userDetails.auth_token
+  constructor(props) {
+    super(props);
+    this.state = {
+      isLoading: false,
+      addBook: false
     }
 
-    console.log(payload);
+    this.updateButton = this.updateButton.bind(this);
+  }
 
-    try {
-      let response = await addToRead(dispatch, payload);
-      if (!response) {
-        return;
+  componentDidMount() {
+    this.updateButton();
+  }
+
+  updateButton = () => {
+    if (this.props.userReducer.token) {
+      let books = [];
+
+      if (this.props.bookReducer.toRead){
+        books = this.props.bookReducer.toRead.filter(book => {
+          return book.id === this.props.book.id
+        });
       }
-    } catch (error) {
-      console.log(error);
+
+      if (books.length === 0) {
+        this.setState({addBook: true});
+      }
+    }
+  }
+  
+  handleAddToRead = async () => {
+    let finished = await this.props.addBookToRead(this.props.userReducer.token, this.props.book);
+    if (finished) {
+      this.setState(finished);
     }
   }
 
-  useEffect(() => {
-    if (userDetails.user) {
-      const addButton = <button onClick={handleAddToRead}>Add to-read</button>
-      setAddToReadButton(addButton);
-    } else {
-      setAddToReadButton(null);
-    }
-  }, [userDetails]);
-  
+  render() {
+
     return (
         <ItemSummary>
             <ItemHeader>
-              {CategoriesParser(book.categories)}
+              {CategoriesParser(this.props.book.categories)}
             </ItemHeader>
             <Content>
-              {book.images.thumbnail ? <img src={book.images.thumbnail.replace("http:", "https:")} alt=""/> : <div className="img-placeholder"></div>}
-              <h3>{book.title}</h3>
-              {AuthorsParser(book.authors)}
-              <Link to={"/details/" + book.id}>Details</Link>
-              {addToReadButton}
+              {this.props.book.images.thumbnail ? <img src={this.props.book.images.thumbnail.replace("http:", "https:")} alt=""/> : <div className="img-placeholder"></div>}
+              <h3>{this.props.book.title}</h3>
+              {AuthorsParser(this.props.book.authors)}
+              <Link to={"/details/" + this.props.book.id}>Details</Link>
+              {this.state.addBook ? <ButtonWithLoading className="mt-auto" isLoading={this.state.isLoading} onClick={this.handleAddToRead}>Add to-read</ButtonWithLoading> : null}
             </Content>
         </ItemSummary>
     );
+  }
 }
 
-export default BookSummary;
+const mapStateToProps = state => ({...state});
+const mapDispatchToProps = dispatch => ({
+  addBookToRead: (token, book) => dispatch(addBookToRead(token, book)) 
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(BookSummary);

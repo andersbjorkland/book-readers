@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const LoadingIndicator = () => {
+const LoadingIndicator = ({smaller}) => {
     return (
         <LoaderContainer>
             <SmallLoader />

@@ -9,6 +9,10 @@ export const BarWrapper = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
+
+    a {
+        color: white;
+    }
 `;
 
 export const InnerContainer = styled.div`

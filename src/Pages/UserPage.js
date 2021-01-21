@@ -45,7 +45,6 @@ class UserPage extends Component {
 
     // console.log(toRead);
     // console.log(userDetails);
-    toReadKey = 0;
 
     render() {
 
@@ -54,7 +53,7 @@ class UserPage extends Component {
                 <Container>
                     <h1>User Details</h1>
                     <p>Logged in as {this.props.userReducer.user}</p>
-                    {this.state.toReadList ? this.state.toReadList.map(book => <ToRead book={book} />) : null}
+                    {this.props.bookReducer.toRead ? this.props.bookReducer.toRead.map(book => <ToRead key={book.id} book={book} />) : null}
                 </Container>
             </Wrapper>
         );

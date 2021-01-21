@@ -1,5 +1,5 @@
 import axios from "axios"
-import { LOAD_USER_DATA, LOAD_USER_DATA_FAIL, LOAD_USER_DATA_SUCCESS, LOGIN_USER, LOGIN_USER_FAIL, LOGIN_USER_SUCCESS, LOGOUT_USER } from "./actionTypes"
+import { ADD_BOOK, AUTH_VALIDATION, LOAD_USER_DATA, LOAD_USER_DATA_FAIL, LOAD_USER_DATA_SUCCESS, LOGIN_USER, LOGIN_USER_FAIL, LOGIN_USER_SUCCESS, LOGOUT_USER } from "./actionTypes"
 
 
 const ROOT_URL = process.env.REACT_APP_ROOT_URL;
@@ -75,7 +75,37 @@ export const loadUserData = (token) => {
             dispatch({
                 type: LOAD_USER_DATA_FAIL,
                 payload: error
-            })
+            });
+            dispatch(checkTokenStillValid(token));
+        });
+    }
+}
+
+export const checkTokenStillValid = (token) => {
+    return function (dispatch) {
+        axios({
+            method: 'get',
+            url: ROOT_URL + '/user/auth',
+            headers: { 'Authorization': token}
+        })
+        .then(response => {
+            dispatch({
+                type: AUTH_VALIDATION,
+                payload: {
+                    status: response.status,
+                    token: response.data.token,
+                    user: response.data.user
+                }
+            });
+        })
+        .catch(error => {
+            console.error(error);
+            dispatch({
+                type: AUTH_VALIDATION,
+                payload: {
+                    status: 401
+                }
+            });
         });
     }
 }
