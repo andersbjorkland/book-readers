@@ -60,22 +60,17 @@ class Login extends Component {
 
         return (
             <Form onSubmit={this.handleLogin}>
-                <Wrapper>
-                    <div>
+                    <div className="flex-column">
                         <label htmlFor="email">Email</label>
                         <input id="email" name="email" type="email" onKeyUp={this.inputEmail} />
                     </div>
 
-                    <div>
+                    <div className="flex-column">
                         <label htmlFor="password">Password</label>
                         <input id="password" name="password" type="password" onKeyUp={this.inputPassword}/>
                     </div>
 
-                    <input type="submit" />
-
-                </Wrapper>
-
-                {this.props.userReducer.isLoading ? <LoadingIndicator />  : null}
+                {this.props.userReducer.isLoading ? <LoadingIndicator />  : <input type="submit" value="Login" />}
                 { this.props.userReducer.message ? <MessageContainer>{this.props.userReducer.message}</MessageContainer> : null }
             </Form>
         );

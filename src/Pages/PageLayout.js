@@ -29,6 +29,12 @@ export const Container = styled.div`
     }
 `;
 
+export const CenteredContent = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+`;
+
 export const Header = styled.div`
     display: flex;
     flex-direction: column;

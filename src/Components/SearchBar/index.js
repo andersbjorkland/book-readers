@@ -3,7 +3,6 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCoffee} from "@fortawesome/free-solid-svg-icons";
 import { Link, Redirect, useHistory, useLocation } from "react-router-dom";
 import { Wrapper } from "./SearchBar.styles";
-import useQuery from "../../Hooks/useQuery";
 
 const SearchBar = ({baseUrl}) => {
     const [searchValue, setSearchValue] = useState("");
@@ -13,9 +12,7 @@ const SearchBar = ({baseUrl}) => {
         setSearchValue(event.target.value);
     }
 
-    const query = useQuery();
     const history = useHistory();
-    const location = useLocation();
 
     /*
      * Upon pressing enter the search query should be executed. 
@@ -24,11 +21,6 @@ const SearchBar = ({baseUrl}) => {
      */
     const handleTextEnter = (event) => {
         if (event.key === 'Enter') {
-            console.log();
-
-            console.log("Enter was pressed");
-            // setShouldRedirect(true);
-            // setTimeout(() => setShouldRedirect(false), 500);
             history.push(baseUrl + "?q=" + searchValue);
         }
     }

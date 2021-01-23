@@ -4,6 +4,8 @@ import { Container, Flexed, Header, Wrapper } from "../PageLayout";
 import ParseGoogleBookToBook from "../../Utilities/ParseGoogleBookToBook";
 import ParseAuthorsToComponent from "../../Utilities/ParseAuthorsToComponent";
 import ParseCategoriesToComponent from "../../Utilities/ParseCategoriesToComponent";
+import Add from "../../Components/UIButtons/Add";
+import AddBookToRead from "../../Components/UIButtons/AddBookToRead";
 
 
 const DetailsPage = () => {
@@ -60,6 +62,9 @@ const DetailsPage = () => {
                         <div className="cursive">
                             {ParseCategoriesToComponent(book.categories)}
                         </div>
+
+                        {book ? <AddBookToRead book={book} /> : null}
+                        
                     </div>
                 </Flexed>
                 <div className="m-center" dangerouslySetInnerHTML={{__html: book.description}} />

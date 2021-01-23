@@ -22,8 +22,7 @@ class UserBar extends Component {
         return (
             <BarWrapper>
                 <InnerContainer>
-                    <Link to="/user"><p>{this.props.userReducer.user}</p></Link>
-                    <Logout />
+                    <p>Logged on: <Link to="/user">{this.props.userReducer.user}</Link></p>
                 </InnerContainer>
             </BarWrapper>
         );

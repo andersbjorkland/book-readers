@@ -1,4 +1,5 @@
 import axios from "axios"
+import ParseGoogleBookToBook from "../Utilities/ParseGoogleBookToBook";
 import { ADD_BOOK, AUTH_VALIDATION, LOAD_USER_DATA, LOAD_USER_DATA_FAIL, LOAD_USER_DATA_SUCCESS, LOGIN_USER, LOGIN_USER_FAIL, LOGIN_USER_SUCCESS, LOGOUT_USER } from "./actionTypes"
 
 
@@ -50,15 +51,16 @@ export const loginUser = ({email, password}) => {
 
 export const logoutUser = () => {
     return function (dispatch) {
-        dispatch({ type: LOGOUT_USER });
         localStorage.removeItem('currentUser');
         localStorage.removeItem('token');
+        dispatch({ type: LOGOUT_USER });
       }
 }
 
 export const loadUserData = (token) => {
     return function (dispatch) {
         dispatch({type: LOAD_USER_DATA});
+        console.log(token);
 
         axios({
             method: 'get',
@@ -66,12 +68,18 @@ export const loadUserData = (token) => {
             headers: { 'Authorization': token}
         })
         .then(response => {
+            console.log(response);
+            const toReadList = response.data.toRead.map(book => ParseGoogleBookToBook(book));
+
             dispatch({
                 type: LOAD_USER_DATA_SUCCESS,
-                payload: response.data
+                payload: {
+                    toRead: toReadList
+                }
             });
         })
         .catch(error => {
+            console.log(error);
             dispatch({
                 type: LOAD_USER_DATA_FAIL,
                 payload: error
@@ -82,6 +90,7 @@ export const loadUserData = (token) => {
 }
 
 export const checkTokenStillValid = (token) => {
+    console.log("Checking token: " + token);
     return function (dispatch) {
         axios({
             method: 'get',

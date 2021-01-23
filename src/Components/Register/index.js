@@ -1,10 +1,18 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
+import Form from "../Form";
+import LoadingIndicator from "../LoadingIndicator";
+import ButtonWithLoading from "../UIButtons/ButtonWithLoading";
+
+const ROOT_URL = process.env.REACT_APP_ROOT_URL;
+
 
 const Register = ({setUser}) => {
     const [email, setEmail] = useState(null);
     const [password, setPassword] = useState(null);
     const [status, setStatus] = useState(null);
     const [message, setMessage] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
 
     const updateEmail = (event) => {
         setEmail(event.target.value);
@@ -26,20 +34,21 @@ const Register = ({setUser}) => {
     }
 
     const register = () => {
-        console.log("Registering... ");
-        fetch("https://localhost:8000/api/users", {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                "email": email,
-                "password": password
-            })
+        console.log("Registering... ", {email: email, password: password});
+        setIsLoading(true);
+        axios({
+            method: 'post',
+            url: ROOT_URL + '/api/users',
+            data: {email: email, password: password}
         })
         .then(response => {
             console.log(response);
             setStatus(response.status);
+            setIsLoading(false);
+        })
+        .catch( error => {
+            console.error(error);
+            setIsLoading(false);
         });
     }
 
@@ -64,7 +73,7 @@ const Register = ({setUser}) => {
     return (
         <>
             {message}
-            <form onSubmit={onSubmit} >
+            <Form onSubmit={onSubmit} >
                 <div className="flex-column">
                     <label htmlFor="email">Email</label>
                     <input id="email" name="email" type="email" required onKeyUp={updateEmail}/>
@@ -73,8 +82,10 @@ const Register = ({setUser}) => {
                     <label htmlFor="password">Password</label>
                     <input id="password" name="password" type="password" required onKeyUp={updatePassword}/>
                 </div>
-                <input type="submit" value="Submit"/>
-            </form>
+
+                {isLoading ? <LoadingIndicator /> : <input type="submit" value="Register"/>}
+                
+            </Form>
         </>
     );
 }

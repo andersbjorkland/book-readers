@@ -21,31 +21,6 @@ class UserPage extends Component {
         this.props.loadData(this.props.userReducer.token);
     }
 
-    // useEffect(() => {
-    //     console.log("loading user data...");
-    //     console.log(toRead);
-    //     const requestOptions = {
-    //         method: 'GET',
-    //         headers: { 'Authorization': userDetails.auth_token, 'Content-Type': 'application/json' },
-    //     };
-
-    //     if(toRead.length < 1) {
-    //         console.log("fetching!");
-    //         fetch(ROOT_URL + "/user", requestOptions)
-    //             .then(response => response.json())
-    //             .then(result => setToReadList(result.toRead.map(book => ParseGoogleBookToBook(book))));
-    //     }
-    // }, []);
-
-    // useEffect(() => {
-    //     if(toRead.length > 0){
-    //         setToReadList(toRead);
-    //     }
-    // }, [toRead]);
-
-    // console.log(toRead);
-    // console.log(userDetails);
-
     render() {
 
         return (

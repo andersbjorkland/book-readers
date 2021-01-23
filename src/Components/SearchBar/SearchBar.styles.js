@@ -10,19 +10,4 @@ export const Wrapper = styled.div`
         border-width: 1.5px;
         border-right: none;
     }
-
-    a.button, .button {
-        text-decoration: none;
-        color: white;
-
-        height: 2rem;
-        min-width: 5rem;
-        padding: 0.3rem;
-        background-color: var(--blue);
-        transition: 0.5s;
-
-        &:hover {
-            background-color: var(--lighterBlue);
-        }
-    }
 `;

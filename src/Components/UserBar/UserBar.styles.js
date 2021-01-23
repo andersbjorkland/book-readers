@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const BarWrapper = styled.div`
     background-color: var(--lighterBlue);
     color: white;
-    padding: 1rem;
+    padding: 0 1rem;
     width: 100%;
 
     display: flex;

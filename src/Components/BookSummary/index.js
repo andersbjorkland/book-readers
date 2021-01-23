@@ -3,13 +3,12 @@ import { Content, ItemHeader } from "../ItemSummary/ItemSummary.styles";
 import AuthorsParser from "../../Utilities/ParseAuthorsToComponent";
 import CategoriesParser from "../../Utilities/ParseCategoriesToComponent";
 import { Link } from "react-router-dom";
-import { useAuthDispatch, useAuthState } from "../../Context";
-import { Component, useEffect, useState } from "react";
-import { addToRead } from "../../Context/actions";
+import { Component } from "react";
 import { connect } from "react-redux";
 import { addBookToRead } from "../../Redux/bookActions";
-import { render } from "@testing-library/react";
-import ButtonWithLoading from "../UIButtons/ButtonWithLoading";
+import Add from "../UIButtons/Add";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faInfo} from "@fortawesome/free-solid-svg-icons";
 
 class BookSummary extends Component {
 
@@ -61,8 +60,10 @@ class BookSummary extends Component {
               {this.props.book.images.thumbnail ? <img src={this.props.book.images.thumbnail.replace("http:", "https:")} alt=""/> : <div className="img-placeholder"></div>}
               <h3>{this.props.book.title}</h3>
               {AuthorsParser(this.props.book.authors)}
-              <Link to={"/details/" + this.props.book.id}>Details</Link>
-              {this.state.addBook ? <ButtonWithLoading className="mt-auto" isLoading={this.state.isLoading} onClick={this.handleAddToRead}>Add to-read</ButtonWithLoading> : null}
+              <div className="flex-row gap--sm mt-auto">
+                <Link className="button--outline button--small" to={"/details/" + this.props.book.id}><FontAwesomeIcon icon={faInfo} /></Link>
+                {this.state.addBook ? <Add onClick={this.handleAddToRead} animateOnClick={true} /> : null}
+              </div>
             </Content>
         </ItemSummary>
     );

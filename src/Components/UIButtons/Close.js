@@ -4,17 +4,18 @@ import styled from "styled-components";
 const Wrapper = styled.div`
     border: 2px var(--blue) solid;
     border-radius: 2px;
-    height: 1.5em;
-    width: 1.5em;
+    height: 1.6em;
+    width: 1.6em;
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: white;
+    transition: 0.8s;
 
-    /* position: absolute; */
-    /* top: 0.5em;
-    right: 0.5em; */
 
     &.close-animation {
+        border-radius: 50%;
+
         &>.left {
             animation: circlingL 2s linear infinite;
 

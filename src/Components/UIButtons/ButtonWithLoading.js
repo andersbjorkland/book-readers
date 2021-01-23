@@ -5,7 +5,7 @@ import SmallLoadingIndicator from "../LoadingIndicator/SmallLoadingIndicator";
 
 const Button = styled.button`
     height: 2rem;
-    background-color: white;
+    background-color: var(--lightGreen);
     color: var(--blue);
     border: none;
     box-shadow: 4px 4px 4px #ededed;

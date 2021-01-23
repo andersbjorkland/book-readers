@@ -9,6 +9,7 @@ const Button = styled.button`
     background-color: white;
     color: var(--blue);
     border: none;
+    border-radius: 0.2rem;
 `;
 
 class Logout extends Component {
@@ -19,13 +20,12 @@ class Logout extends Component {
     }
 
     handleLogout = () => {
-        console.log("Logging out");
         this.props.logout();
     }
 
     render() {
         return (
-            <Button onClick={this.handleLogout}>Logout</Button>
+            <Button className={this.props.className} onClick={this.handleLogout}>Logout</Button>
         );
     }
 }
