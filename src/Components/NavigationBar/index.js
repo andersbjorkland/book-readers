@@ -16,7 +16,7 @@ class NavigationBar extends Component {
                     <LinkContainer>
                         <SearchBar baseUrl="/search" />
                         {this.props.userReducer.user ? <Link className="button" to="/user">My Corner</Link> : null}
-                        {this.props.userReducer.user ? <Logout className="ml-auto" /> : <Link className="button button--white black ml-auto" to="/login">Login</Link>}
+                        {this.props.userReducer.user ? <Logout /> : <Link className="button button--white black" to="/login">Login</Link>}
                     </LinkContainer>
                 </Nav>
             </Wrapper>

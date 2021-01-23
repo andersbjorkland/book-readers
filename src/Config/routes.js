@@ -5,6 +5,7 @@ import RegisterPage from "../Pages/RegisterPage";
 import ResultsPage from "../Pages/ResultsPage";
 import UserPage from "../Pages/UserPage";
 import VerifyPage from "../Pages/VerifyPage";
+import StartPage from "../Pages/StartPage";
 
 const routes = [
     {
@@ -41,7 +42,7 @@ const routes = [
     {
         exact: true,
         path: '/',
-        component: ResultsPage,
+        component: StartPage,
         isPrivate: false
     },
     {

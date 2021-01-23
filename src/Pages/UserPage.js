@@ -4,7 +4,6 @@ import ToRead from "../Components/ToRead";
 import { loadUserData } from "../Redux/authActions";
 import { Container, Wrapper } from "./PageLayout";
 
-
 class UserPage extends Component {
     constructor(props) {
         super(props);
