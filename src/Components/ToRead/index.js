@@ -1,11 +1,10 @@
-import { Component, useState } from "react";
+import { faInfo } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Component } from "react";
 import { connect } from "react-redux";
-import { useAuthDispatch, useAuthState } from "../../Context";
-import { removeToRead } from "../../Context/actions";
+import { Link } from "react-router-dom";
 import { removeBookToRead } from "../../Redux/bookActions";
 import AuthorsParser from "../../Utilities/ParseAuthorsToComponent";
-import LoadingIndicator from "../LoadingIndicator";
-import ButtonWithLoading from "../UIButtons/ButtonWithLoading";
 import Close from "../UIButtons/Close";
 import { ControlsContainer, Wrapper } from "./ToRead.styles";
 
@@ -43,9 +42,12 @@ class ToRead extends Component {
         <Wrapper>
           <ControlsContainer>
             <Close onClose={this.handleRemove} animateOnClick={true} />
+            <Link className="button--outline button--small" to={"/details/" + this.props.book.id}><FontAwesomeIcon icon={faInfo} /></Link>
           </ControlsContainer>
           <div>
-            <p>{book.title} ({book.publishedAt ? book.publishedAt.substr(0, 4) : "N/A"}) by {AuthorsParser(book.authors)}</p>
+            <p>
+              {book.title} ({book.publishedAt ? book.publishedAt.substr(0, 4) : "N/A"}) by {AuthorsParser(book.authors)} 
+            </p>
           </div>
             
         </Wrapper>

@@ -60,7 +60,6 @@ export const logoutUser = () => {
 export const loadUserData = (token) => {
     return function (dispatch) {
         dispatch({type: LOAD_USER_DATA});
-        console.log(token);
 
         axios({
             method: 'get',
@@ -70,6 +69,7 @@ export const loadUserData = (token) => {
         .then(response => {
             console.log(response);
             const toReadList = response.data.toRead.map(book => ParseGoogleBookToBook(book));
+            console.log(toReadList);
 
             dispatch({
                 type: LOAD_USER_DATA_SUCCESS,
