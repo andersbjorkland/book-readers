@@ -2,7 +2,6 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import Form from "../Form";
 import LoadingIndicator from "../LoadingIndicator";
-import ButtonWithLoading from "../UIButtons/ButtonWithLoading";
 
 const ROOT_URL = process.env.REACT_APP_ROOT_URL;
 
@@ -64,7 +63,7 @@ const Register = ({setUser}) => {
                 setMessage(<p>Something went wrong [Status code: {status}]. Try again.</p>)
             }
         }
-    }, [status]);
+    }, [status, email]);
 
     if (status && status < 300) {
         return message;

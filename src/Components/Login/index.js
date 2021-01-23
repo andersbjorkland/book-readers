@@ -1,14 +1,11 @@
-import {Component, useEffect, useState} from "react";
-import { connect, useDispatch } from "react-redux";
-import {Redirect, useHistory} from "react-router";
+import {Component} from "react";
+import { connect} from "react-redux";
+import {Redirect} from "react-router";
 import { loginUser } from "../../Redux/authActions";
-//import { loginUser, useAuthDispatch, useAuthState } from "../../Context";
 import Form from "../Form";
 import LoadingIndicator from "../LoadingIndicator";
 import MessageContainer from "../MessageContainer";
-import ErrorMessage from "../Messages/ErrorMessage";
 import InfoMessage from "../Messages/InfoMessage";
-import { Wrapper } from "./Login.styles";
 
 class Login extends Component {
 

@@ -1,13 +1,9 @@
-import { Component, useEffect, useState } from "react";
+import { Component } from "react";
 import { connect } from "react-redux";
-import LoadingIndicator, { SmallLoader } from "../Components/LoadingIndicator";
 import ToRead from "../Components/ToRead";
-import { useAuthState } from "../Context";
 import { loadUserData } from "../Redux/authActions";
-import ParseGoogleBookToBook from "../Utilities/ParseGoogleBookToBook";
 import { Container, Wrapper } from "./PageLayout";
 
-const ROOT_URL = process.env.REACT_APP_ROOT_URL;
 
 class UserPage extends Component {
     constructor(props) {

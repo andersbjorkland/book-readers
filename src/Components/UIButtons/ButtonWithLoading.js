@@ -1,6 +1,5 @@
 import { useState } from "react";
 import styled from "styled-components";
-import LoadingIndicator from "../LoadingIndicator";
 import SmallLoadingIndicator from "../LoadingIndicator/SmallLoadingIndicator";
 
 const Button = styled.button`
