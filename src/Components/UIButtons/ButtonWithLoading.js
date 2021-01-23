@@ -4,23 +4,24 @@ import SmallLoadingIndicator from "../LoadingIndicator/SmallLoadingIndicator";
 
 const Button = styled.button`
     height: 2rem;
-    background-color: var(--lightGreen);
-    color: var(--blue);
-    border: none;
+    border: 4px solid ${props => props.border ? props.border : "var(--blue)"};
+    border-radius: 4px;
+    color: ${props => props.color ? props.color : (props.border ? props.border : "var(--blue)")};
     box-shadow: 4px 4px 4px #ededed;
     overflow: hidden;
     outline: none;
+    background-color: white;
+
+    font-weight: bold;
 `;
 
-const ButtonWithLoading = ({children, className, onClick, isLoading}) => {
-    const [showLoading, setShowLoading] = useState(false);
+const ButtonWithLoading = ({children, className, border, color, onClick, isLoading}) => {
     const handleClick = () => {
-        setShowLoading(true);
         onClick();
     } 
     return (
-        <Button className={className} onClick={handleClick}>
-            {showLoading || isLoading ? <SmallLoadingIndicator /> : children}
+        <Button className={className} color={color} border={border} onClick={handleClick} >
+            { isLoading ? <SmallLoadingIndicator /> : children}
         </Button>
     );
 }

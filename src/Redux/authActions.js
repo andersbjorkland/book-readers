@@ -1,6 +1,6 @@
 import axios from "axios"
 import ParseGoogleBookToBook from "../Utilities/ParseGoogleBookToBook";
-import { AUTH_VALIDATION, LOAD_USER_DATA, LOAD_USER_DATA_FAIL, LOAD_USER_DATA_SUCCESS, LOGIN_USER, LOGIN_USER_FAIL, LOGIN_USER_SUCCESS, LOGOUT_USER } from "./actionTypes"
+import { AUTH_VALIDATION, LOAD_USER_DATA, LOAD_USER_DATA_FAIL, LOAD_USER_DATA_SUCCESS, LOGIN_USER, LOGIN_USER_FAIL, LOGIN_USER_SUCCESS, LOGOUT_USER, UNREGISTER_USER, UNREGISTER_USER_FAIL, UNREGISTER_USER_SUCCESS } from "./actionTypes"
 
 
 const ROOT_URL = process.env.REACT_APP_ROOT_URL;
@@ -85,6 +85,34 @@ export const loadUserData = (token) => {
                 payload: error
             });
             dispatch(checkTokenStillValid(token));
+        });
+    }
+}
+
+export const unregister = (token) => {
+    return function (dispatch) {
+        dispatch({type: UNREGISTER_USER});
+
+        console.log("Unregistering... ");
+  
+        return axios({
+            method: 'get',
+            url: ROOT_URL + '/user/unregister',
+            headers: { 'Authorization': token}
+        })
+        .then(response => {
+            console.log(response);
+            dispatch({
+                type: UNREGISTER_USER_SUCCESS
+            });
+            return response;
+        })
+        .catch( error => {
+            console.error(error);
+            dispatch({
+                type: UNREGISTER_USER_FAIL
+            });
+            return error;
         });
     }
 }
