@@ -66,13 +66,9 @@ const userReducer = (state = initialState, action) => {
             }
         }
         case LOAD_USER_DATA_SUCCESS: {
-
-            const toRead = action.payload.toRead;
-            localStorage.setItem('toRead', JSON.stringify(toRead));
             return {
                 ...state,
                 isLoadingUserData: false,
-                toRead: [...toRead]
             }
         }
         case LOAD_USER_DATA_FAIL: {

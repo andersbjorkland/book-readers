@@ -1,15 +1,15 @@
-import { faBookOpen, faInfo } from "@fortawesome/free-solid-svg-icons";
+import { faBook, faInfo } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { addCurrentlyReading, removeBookToRead } from "../../Redux/bookActions";
+import { addBookToRead, removeBookToRead } from "../../Redux/bookActions";
 import AuthorsParser from "../../Utilities/ParseAuthorsToComponent";
 import Close from "../UIButtons/Close";
 import GenericSmallButton from "../UIButtons/GenericSmallButton";
-import { ControlsContainer, Wrapper } from "./ToRead.styles";
+import { ControlsContainer, Wrapper } from "./CurrentRead.styles";
 
-class ToRead extends Component {
+class CurrentRead extends Component {
 
   constructor(props) {
     super(props);
@@ -37,11 +37,11 @@ class ToRead extends Component {
     } 
   }
 
-  addCurrentlyReading = () => {
+  addToRead = () => {
     const token = this.props.userReducer.token;
     
     if (token) {
-      this.props.addCurrentlyReading(token, this.props.book);
+      this.props.addToRead(token, this.props.book);
     }
   }
 
@@ -52,7 +52,7 @@ class ToRead extends Component {
           <ControlsContainer>
             <Close onClose={this.handleRemove} animateOnClick={true} />
             <Link className="button--outline button--small bg--white" to={"/details/" + this.props.book.id}><FontAwesomeIcon icon={faInfo} /></Link>
-            <GenericSmallButton isLoading={false} onClick={this.addCurrentlyReading} toolTip="Add as Currently Reading"><FontAwesomeIcon icon={faBookOpen} /></GenericSmallButton>
+            <GenericSmallButton isLoading={false} onClick={this.addToRead} toolTip="Move to To-read"><FontAwesomeIcon icon={faBook} /></GenericSmallButton>
           </ControlsContainer>
           <div>
             <p>
@@ -68,7 +68,7 @@ class ToRead extends Component {
 const mapStateToProps = state => ({...state});
 const mapDispatchToProps = dispatch => ({
   removeToRead: (token, book) => dispatch(removeBookToRead(token, book)),
-  addCurrentlyReading: (token, book) => dispatch(addCurrentlyReading(token, book))
+  addToRead: (token, book) => dispatch(addBookToRead(token, book))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(ToRead);
+export default connect(mapStateToProps, mapDispatchToProps)(CurrentRead);

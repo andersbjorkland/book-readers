@@ -56,6 +56,12 @@ export const GlobalStyle = createGlobalStyle`
         }
     }
 
+    .bg{
+        &--white {
+            background-color: white;
+        }
+    }
+
     .margin-left--auto, .ml-auto {
         margin-left: auto;
     }

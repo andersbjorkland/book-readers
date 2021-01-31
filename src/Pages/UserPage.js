@@ -2,8 +2,9 @@ import { Component } from "react";
 import { connect } from "react-redux";
 import ToRead from "../Components/ToRead";
 import { loadUserData, logoutUser, unregister } from "../Redux/authActions";
-import { Container, Wrapper } from "./PageLayout";
+import { Container, Section, Wrapper } from "./PageLayout";
 import ButtonWithLoading from "../Components/UIButtons/ButtonWithLoading";
+import CurrentRead from "../Components/CurrentRead";
 
 class UserPage extends Component {
     constructor(props) {
@@ -39,14 +40,20 @@ class UserPage extends Component {
     }
 
     render() {
-        console.log(this.state.isLoading);
-
+        console.log(this.props.bookReducer);
         return (
             <Wrapper>
                 <Container>
                     <h1>User Details</h1>
                     <p>Logged in as {this.props.userReducer.user}</p>
-                    {this.props.bookReducer.toRead ? this.props.bookReducer.toRead.map(book => <ToRead key={book.id} book={book} />) : null}
+                    <Section>
+                        <h2>To-read</h2>
+                        {this.props.bookReducer.toRead ? this.props.bookReducer.toRead.map(book => <ToRead key={book.id} book={book} />) : <p>Nothing in your list to read.</p>}
+                    </Section>
+                    <Section>
+                        <h2>Currently Reading</h2>
+                        {this.props.bookReducer.currentRead ? this.props.bookReducer.currentRead.map(book => <CurrentRead key={book.id} book={book} />) : <p>Nothing here. Add a book you're currently reading.</p>}
+                    </Section>
                     <ButtonWithLoading isLoading={this.state.isLoading} onClick={this.unregister} border="var(--orange)">Unregister</ButtonWithLoading>
                 </Container>
             </Wrapper>

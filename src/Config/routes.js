@@ -6,6 +6,7 @@ import ResultsPage from "../Pages/ResultsPage";
 import UserPage from "../Pages/UserPage";
 import VerifyPage from "../Pages/VerifyPage";
 import StartPage from "../Pages/StartPage";
+import ReviewPage from "../Pages/ReviewPage";
 
 const routes = [
     {
@@ -27,6 +28,11 @@ const routes = [
         path: '/details/:id',
         component: DetailsPage,
         isPrivate: false
+    },
+    {
+        path: '/review/:id',
+        component: ReviewPage,
+        isPrivate: true
     },
     {
         path: '/search',

@@ -35,6 +35,14 @@ export const CenteredContent = styled.div`
     align-items: center;
 `;
 
+export const Section = styled.section`
+    margin: 2rem 0;
+    
+    h2 {
+        margin-bottom: 0;
+    }
+`;
+
 export const Header = styled.div`
     display: flex;
     flex-direction: column;
