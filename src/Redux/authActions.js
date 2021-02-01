@@ -3,7 +3,8 @@ import ParseGoogleBookToBook from "../Utilities/ParseGoogleBookToBook";
 import { AUTH_VALIDATION, LOAD_USER_DATA, LOAD_USER_DATA_FAIL, LOAD_USER_DATA_SUCCESS, LOGIN_USER, LOGIN_USER_FAIL, LOGIN_USER_SUCCESS, LOGOUT_USER, UNREGISTER_USER, UNREGISTER_USER_FAIL, UNREGISTER_USER_SUCCESS } from "./actionTypes"
 
 
-const ROOT_URL = process.env.REACT_APP_ROOT_URL;
+const ROOT_URL = window.location.hostname === 'localhost' ? process.env.REACT_APP_ROOT_URL_DEV : process.env.REACT_APP_ROOT_URL;
+
 
 const loading = () => {
     return {

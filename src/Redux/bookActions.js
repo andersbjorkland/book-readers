@@ -1,8 +1,8 @@
 import axios from "axios";
-import ParseGoogleBookToBook from "../Utilities/ParseGoogleBookToBook";
-import { ADD_BOOK, ADD_BOOK_FAIL, ADD_BOOK_SUCCESS, ADD_CURRENTLY_READING, ADD_CURRENTLY_READING_FAIL, ADD_CURRENTLY_READING_SUCCESS, REMOVE_BOOK, REMOVE_BOOK_FAIL, REMOVE_BOOK_SUCCESS } from "./actionTypes";
+import { ADD_BOOK, ADD_BOOK_FAIL, ADD_BOOK_SUCCESS, ADD_CURRENTLY_READING, ADD_CURRENTLY_READING_FAIL, ADD_CURRENTLY_READING_SUCCESS, REMOVE_BOOK, REMOVE_BOOK_FAIL, REMOVE_BOOK_SUCCESS, REMOVE_CURRENTLY_READING, REMOVE_CURRENTLY_READING_FAIL, REMOVE_CURRENTLY_READING_SUCCESS } from "./actionTypes";
 
-const ROOT_URL = process.env.REACT_APP_ROOT_URL;
+const ROOT_URL = window.location.hostname === 'localhost' ? process.env.REACT_APP_ROOT_URL_DEV : process.env.REACT_APP_ROOT_URL;
+
 
 export const addBookToRead = (token, book) => {
     return function (dispatch) {
@@ -80,5 +80,28 @@ export const addCurrentlyReading = (token, book) => {
         
 
         return data;
+    }
+}
+
+export const removeBookCurrentRead = (token, book) => {
+    return function (dispatch) {
+        dispatch({type: REMOVE_CURRENTLY_READING});
+
+        let data = axios({
+            method: 'delete',
+            url: ROOT_URL + '/user/current-read',
+            headers: { 'Authorization': token},
+            data: {token: token, volumeId: book.id}
+        })
+        .then(response => {
+            console.log(response.data);
+            dispatch({type: REMOVE_CURRENTLY_READING_SUCCESS, payload: {book: book, message: response.data.message}});
+            return response.data;
+        })
+        .catch(error => {
+            console.log(error);
+            dispatch({type: REMOVE_CURRENTLY_READING_FAIL})
+            return error;
+        });
     }
 }

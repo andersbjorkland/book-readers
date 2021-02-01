@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { addBookToRead, removeBookToRead } from "../../Redux/bookActions";
+import { addBookToRead, removeBookCurrentRead } from "../../Redux/bookActions";
 import AuthorsParser from "../../Utilities/ParseAuthorsToComponent";
 import Close from "../UIButtons/Close";
 import GenericSmallButton from "../UIButtons/GenericSmallButton";
@@ -25,7 +25,7 @@ class CurrentRead extends Component {
     const token = this.props.userReducer.token;
     if (token) {
       try {
-        let response = await this.props.removeToRead(token, this.props.book);
+        let response = await this.props.removeCurrentRead(token, this.props.book);
         if (!response) {
           return;
         } else {
@@ -41,6 +41,7 @@ class CurrentRead extends Component {
     const token = this.props.userReducer.token;
     
     if (token) {
+      this.setState({isLoading: true});
       this.props.addToRead(token, this.props.book);
     }
   }
@@ -67,7 +68,7 @@ class CurrentRead extends Component {
 
 const mapStateToProps = state => ({...state});
 const mapDispatchToProps = dispatch => ({
-  removeToRead: (token, book) => dispatch(removeBookToRead(token, book)),
+  removeCurrentRead: (token, book) => dispatch(removeBookCurrentRead(token, book)),
   addToRead: (token, book) => dispatch(addBookToRead(token, book))
 });
 

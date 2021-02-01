@@ -14,7 +14,8 @@ const DetailsPage = () => {
     const [isFetching, setIsFetching] = useState(false);
     
     useEffect(() => {
-        const target = 'https://books.andersbjorkland.online/book-api/details/' + id;
+        const target = window.location.hostname === 'localhost' ? process.env.REACT_APP_BOOK_DETAILS_DEV + id : process.env.REACT_APP_BOOK_DETAILS + id;
+
         setIsFetching(true);
         fetch(target)
             .then(res => res.json())
