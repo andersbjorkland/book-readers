@@ -1,10 +1,12 @@
 import { Component, useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { useParams } from "react-router-dom";
+import BookSummary from "../Components/BookSummary";
 import LoadingIndicator from "../Components/LoadingIndicator";
+import Review from "../Components/Review";
 import { loadUserData, logoutUser, unregister } from "../Redux/authActions";
 import { loadBookDetails } from "../Utilities/simpleActions";
-import { Container, Section, Wrapper } from "./PageLayout";
+import { Container, Flexed, Section, Wrapper } from "./PageLayout";
 
 const ReviewPage = () => {
     const [book, setBook] = useState(null);
@@ -19,8 +21,8 @@ const ReviewPage = () => {
             try {
                 const result = await loadBookDetails(id);
                 if (result) {
-                    setBook(result);
                     console.log(result)
+                    setBook(result);
                 }
             } catch (error) {
                 console.log();
@@ -46,11 +48,14 @@ const ReviewPage = () => {
     return (
         <Wrapper>
             <Container>
-                <h1>Review: {book.title}</h1>
-                {isLoading ?? <LoadingIndicator />}
-                <Section>
-                    <h2>How did you like it?</h2>
-                </Section>
+                <Flexed>
+                    {book ? <BookSummary book={book} /> : <LoadingIndicator />}
+                    <div>
+                        <h2 className="mt-0">Review in short</h2> 
+                        {book ? <Review book={book} /> : null} 
+                    </div>
+                </Flexed>
+                
             </Container>
         </Wrapper>
     );

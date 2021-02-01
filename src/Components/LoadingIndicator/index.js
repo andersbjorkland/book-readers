@@ -2,11 +2,19 @@ import styled from "styled-components";
 
 const LoadingIndicator = ({smaller}) => {
     return (
-        <LoaderContainer>
-            <SmallLoader />
-        </LoaderContainer>
+        <Wrapper>
+            <LoaderContainer>
+                <SmallLoader />
+            </LoaderContainer>
+        </Wrapper>
     );
 }
+
+const Wrapper = styled.div`
+    padding: 1rem 0;
+    display: flex;
+    justify-content: center;
+`;
 
 const LoaderContainer = styled.div`
     width: 2.25rem;

@@ -1,4 +1,4 @@
-import { faBookOpen, faInfo } from "@fortawesome/free-solid-svg-icons";
+import { faBookOpen, faInfo, faPencilAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Component } from "react";
 import { connect } from "react-redux";
@@ -52,6 +52,7 @@ class ToRead extends Component {
           <ControlsContainer>
             <Close onClose={this.handleRemove} animateOnClick={true} />
             <Link className="button--outline button--small bg--white" to={"/details/" + this.props.book.id}><FontAwesomeIcon icon={faInfo} /></Link>
+            <Link className="button--outline button--small bg--white" to={"/review/" + this.props.book.id}><FontAwesomeIcon icon={faPencilAlt} /></Link>
             <GenericSmallButton isLoading={false} onClick={this.addCurrentlyReading} toolTip="Add as Currently Reading"><FontAwesomeIcon icon={faBookOpen} /></GenericSmallButton>
           </ControlsContainer>
           <div>

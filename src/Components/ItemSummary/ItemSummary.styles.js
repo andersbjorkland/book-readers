@@ -3,6 +3,7 @@ import styled from "styled-components";
 const ITEM_PADDING = "1rem";
 
 export const Wrapper = styled.div`
+    max-width: 25rem;
     background-color: white;
     display: flex;
     flex-direction: column;
@@ -36,7 +37,7 @@ export const Content = styled.div`
 `;
 
 export const ItemHeader = styled.div`
-    min-height: 3em;
+    min-height: 5em;
     overflow-y: auto;
     background-color: var(--blue);
     color: white;

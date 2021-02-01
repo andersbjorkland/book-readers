@@ -69,6 +69,9 @@ export const GlobalStyle = createGlobalStyle`
     .mt-auto {
         margin-top: auto;
     }
+    .mt-0 {
+        margin-top: 0;
+    }
 
     .md-width {
         max-width: 800px;
