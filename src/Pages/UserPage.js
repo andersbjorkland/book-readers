@@ -58,7 +58,9 @@ class UserPage extends Component {
                     </Section>
                     <Section>
                         <h2>Reviews</h2>
-                        {this.props.bookReducer.reviews && this.props.bookReducer.reviews.map(review => <ReviewSummary key={reviewId++} review={review} />) }
+                        <div className="flex-column gap--m">
+                            {this.props.bookReducer.reviews && this.props.bookReducer.reviews.map(review => <ReviewSummary key={reviewId++} review={review} />) }
+                        </div>
                     </Section>
                     <ButtonWithLoading isLoading={this.state.isLoading} onClick={this.unregister} border="var(--orange)">Unregister</ButtonWithLoading>
                 </Container>

@@ -103,7 +103,7 @@ const bookReducer = (state = initialState, action) => {
             localStorage.setItem('currentRead', JSON.stringify(currentRead));
             localStorage.setItem('reviews', JSON.stringify(reviews));
 
-            console.log(reviews);
+            console.log(reviews)
 
             return {
                 ...state,
@@ -114,7 +114,10 @@ const bookReducer = (state = initialState, action) => {
         }
         case ADD_REVIEW_SUCCESS: {
             const review = action.payload.review;
+            console.log(review);
             const reviews = [...state.reviews, review];
+            console.log(reviews);
+
             localStorage.setItem('reviews', JSON.stringify(reviews));
 
             return {

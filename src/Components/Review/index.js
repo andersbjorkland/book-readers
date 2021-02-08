@@ -1,7 +1,7 @@
 import Form from "../Form";
 import { Component, useEffect, useState } from "react";
 import Score from "../UIButtons/Score";
-import SocialImpression, { SocialButton } from "../UIButtons/SocialImpression";
+import SocialImpression, { iconLexicon, SocialButton } from "../UIButtons/SocialImpression";
 import { Content, SummaryWrapper, Wrapper } from "./Review.styles";
 import GenericButton from "../UIButtons/GenericButton";
 import { reviewBook } from "../../Redux/bookActions";
@@ -169,7 +169,9 @@ export const ReviewSummary = ({review}) => {
         stars.push(<FontAwesomeIcon className="purple" key={i} icon={faStar} />);
     }
 
-    let flairs = null;
+    const lexicon = iconLexicon;
+    let flairKey = 0;
+    const flairs = review.flairs.map(flair => <SocialButton activated={true} key={flairKey++} faCode={flair} iconObj={iconLexicon[flair]} lexiconize={false} />);
 
 
     return (
@@ -190,8 +192,8 @@ export const ReviewSummary = ({review}) => {
                 {review.text && <p>review.text</p>}
             </div>
             {flairs && (
-                <div>
-                    FLAIRS!!!
+                <div className="flex-row gap--sm">
+                    {flairs}
                 </div>
             )}
         </SummaryWrapper>

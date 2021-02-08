@@ -31,6 +31,10 @@ export const GlobalStyle = createGlobalStyle`
 
     }
 
+    .blue {
+        color: var(--lighterBlue);
+    }
+
     .purple {
         color: var(--purple);
     }

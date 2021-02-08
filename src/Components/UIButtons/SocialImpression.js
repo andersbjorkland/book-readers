@@ -67,12 +67,14 @@ const Wrapper = styled.div`
     }
 `;
 
-export const SocialButton = ({faCode, updateImpressions, iconObj = null, lexiconize = true}) => {
-    const [active, setActive] = useState(false);
+export const SocialButton = ({faCode, updateImpressions, activated=false, iconObj = null, lexiconize = true}) => {
+    const [active, setActive] = useState(activated);
 
     const handleClick = () => {
-        updateImpressions(!active, faCode);
-        setActive(!active);
+        if (updateImpressions) {
+            updateImpressions(!active, faCode);
+            setActive(!active);
+        }
 
     }
 
