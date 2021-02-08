@@ -71,12 +71,14 @@ export const loadUserData = (token) => {
             console.log(response);
             const toReadList = response.data.toRead.map(book => ParseGoogleBookToBook(book));
             const currentReadList = response.data.currentRead.map(book => ParseGoogleBookToBook(book));
+            const reviews = response.data.reviews.map(review => ({...review, book: ParseGoogleBookToBook(review.book)}))
 
             dispatch({
                 type: LOAD_USER_DATA_SUCCESS,
                 payload: {
                     toRead: toReadList,
-                    currentRead: currentReadList
+                    currentRead: currentReadList,
+                    reviews: reviews
                 }
             });
         })

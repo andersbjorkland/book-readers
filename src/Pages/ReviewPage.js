@@ -6,7 +6,7 @@ import LoadingIndicator from "../Components/LoadingIndicator";
 import Review from "../Components/Review";
 import { loadUserData, logoutUser, unregister } from "../Redux/authActions";
 import { loadBookDetails } from "../Utilities/simpleActions";
-import { Container, Flexed, Section, Wrapper } from "./PageLayout";
+import { CenteredContent, Container, Flexed, Section, Wrapper } from "./PageLayout";
 
 const ReviewPage = () => {
     const [book, setBook] = useState(null);
@@ -48,14 +48,11 @@ const ReviewPage = () => {
     return (
         <Wrapper>
             <Container>
-                <Flexed>
-                    {book ? <BookSummary book={book} /> : <LoadingIndicator />}
-                    <div>
-                        <h2 className="mt-0">Review in short</h2> 
-                        {book ? <Review book={book} /> : null} 
-                    </div>
-                </Flexed>
-                
+                <CenteredContent>
+                    <h1>Reviewing</h1>
+                    {book ? <BookSummary book={book} maxNumCategories={1} reviewLink={false} /> : <LoadingIndicator />}
+                    {book ? <Review book={book} /> : null} 
+                </CenteredContent>
             </Container>
         </Wrapper>
     );

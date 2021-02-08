@@ -8,7 +8,7 @@ import { connect } from "react-redux";
 import { addBookToRead } from "../../Redux/bookActions";
 import Add from "../UIButtons/Add";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faInfo} from "@fortawesome/free-solid-svg-icons";
+import {faInfo, faPencilAlt} from "@fortawesome/free-solid-svg-icons";
 
 class BookSummary extends Component {
 
@@ -29,6 +29,7 @@ class BookSummary extends Component {
   updateButton = () => {
     if (this.props.userReducer.token) {
       let books = [];
+      let currentReads = [];
 
       if (this.props.bookReducer.toRead){
         books = this.props.bookReducer.toRead.filter(book => {
@@ -36,7 +37,13 @@ class BookSummary extends Component {
         });
       }
 
-      if (books.length === 0) {
+      if (this.props.bookReducer.currentRead) {
+        currentReads = this.props.bookReducer.currentRead.filter(book => {
+          return book.id === this.props.book.id
+        });
+      }
+
+      if (books.length === 0 && currentReads.length === 0) {
         this.setState({addBook: true});
       }
     }
@@ -54,14 +61,15 @@ class BookSummary extends Component {
     return (
         <ItemSummary>
             <ItemHeader>
-              {CategoriesParser(this.props.book.categories)}
+              <h3>{this.props.book.title}</h3>
+              {AuthorsParser(this.props.book.authors)}
             </ItemHeader>
             <Content>
               {this.props.book.images.thumbnail ? <img src={this.props.book.images.thumbnail.replace("http:", "https:")} alt=""/> : <div className="img-placeholder"></div>}
-              <h3>{this.props.book.title}</h3>
-              {AuthorsParser(this.props.book.authors)}
+              {CategoriesParser(this.props.book.categories, this.props.maxNumCategories)}
               <div className="flex-row gap--sm mt-auto">
                 <Link className="button--outline button--small" to={"/details/" + this.props.book.id}><FontAwesomeIcon icon={faInfo} /></Link>
+                {this.props.userReducer.token && this.props.reviewLink ? <Link className="button--outline button--small bg--white" to={"/review/" + this.props.book.id}><FontAwesomeIcon icon={faPencilAlt} /></Link> : null}
                 {this.state.addBook ? <Add onClick={this.handleAddToRead} animateOnClick={true} /> : null}
               </div>
             </Content>

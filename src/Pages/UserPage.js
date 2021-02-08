@@ -5,6 +5,7 @@ import { loadUserData, logoutUser, unregister } from "../Redux/authActions";
 import { Container, Section, Wrapper } from "./PageLayout";
 import ButtonWithLoading from "../Components/UIButtons/ButtonWithLoading";
 import CurrentRead from "../Components/CurrentRead";
+import { ReviewSummary, reviewSummary } from "../Components/Review";
 
 class UserPage extends Component {
     constructor(props) {
@@ -40,7 +41,8 @@ class UserPage extends Component {
     }
 
     render() {
-        console.log(this.props.bookReducer);
+        let reviewId = 0;
+
         return (
             <Wrapper>
                 <Container>
@@ -53,6 +55,10 @@ class UserPage extends Component {
                     <Section>
                         <h2>Currently Reading</h2>
                         {this.props.bookReducer.currentRead ? this.props.bookReducer.currentRead.map(book => <CurrentRead key={book.id} book={book} />) : <p>Nothing here. Add a book you're currently reading.</p>}
+                    </Section>
+                    <Section>
+                        <h2>Reviews</h2>
+                        {this.props.bookReducer.reviews && this.props.bookReducer.reviews.map(review => <ReviewSummary key={reviewId++} review={review} />) }
                     </Section>
                     <ButtonWithLoading isLoading={this.state.isLoading} onClick={this.unregister} border="var(--orange)">Unregister</ButtonWithLoading>
                 </Container>

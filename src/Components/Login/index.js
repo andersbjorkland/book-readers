@@ -67,7 +67,7 @@ class Login extends Component {
                         <input id="password" name="password" type="password" onKeyUp={this.inputPassword}/>
                     </div>
 
-                {this.props.userReducer.isLoading ? <LoadingIndicator />  : <input type="submit" value="Login" />}
+                {this.props.userReducer.isLoading ? <LoadingIndicator />  : <input className="mt-2" type="submit" value="Login" />}
                 { this.props.userReducer.message ? <MessageContainer>{this.props.userReducer.message}</MessageContainer> : null }
             </Form>
         );

@@ -5,6 +5,7 @@ const initialState = {
     user: null || localStorage.getItem('user'),
     isLoading: false,
     isLoadingUserData: false,
+    hasLoadedUserData: false,
     message: null
 }
 
@@ -69,6 +70,7 @@ const userReducer = (state = initialState, action) => {
             return {
                 ...state,
                 isLoadingUserData: false,
+                hasLoadedUserData: true
             }
         }
         case LOAD_USER_DATA_FAIL: {

@@ -6,9 +6,9 @@ import styled from "styled-components";
 const Wrapper = styled.div`
     display: flex;
     flex-direction: row;
-    max-width: fit-content;
-
-    justify-content: center;
+    
+    width: 7rem;
+    justify-content: space-between;
 
     svg {
         color: darkgray;
@@ -50,7 +50,6 @@ const Star = ({onClick, value, selectedScore}) => {
 const Score = ({setScore, selectedScore}) => {
 
     const onClick = (value) => {
-        console.log("Clicked with value: " + value);
         setScore(value);
     }
 

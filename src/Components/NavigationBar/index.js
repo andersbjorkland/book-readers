@@ -1,11 +1,18 @@
 import { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import { loadUserData, logoutUser, unregister } from "../../Redux/authActions";
 import SearchBar from "../SearchBar";
 import Logout from "../UIButtons/Logout";
 import { LinkContainer, Nav, Wrapper } from "./NavigationBar.styles";
 
 class NavigationBar extends Component {
+
+    componentDidMount() {
+        if (!this.props.userReducer.hasLoadedUserData && this.props.userReducer.token) {
+            this.props.loadData(this.props.userReducer.token);
+        }
+    }
 
     render() {
 
@@ -24,6 +31,11 @@ class NavigationBar extends Component {
     }
 }
 
+const mapDispatchToProps = (dispatch) => ({
+    loadData: (token) => dispatch(loadUserData(token)),
+    unregister: (token) => dispatch(unregister(token)),
+    logout: () => dispatch(logoutUser())
+})
 const mapStateToProps = state => ({...state});
 
-export default connect(mapStateToProps)(NavigationBar);
+export default connect(mapStateToProps, mapDispatchToProps)(NavigationBar);

@@ -8,6 +8,7 @@ export const GlobalStyle = createGlobalStyle`
         --lighterBlue: #184166;
         --whiteBlue: #e8f0ff;
         --green: #183A37;
+        --solidGreen: #31c400;
         --lightGreen: #68eded;
         --beige: #EFD6AC;
         --orange: #C44900;
@@ -30,6 +31,10 @@ export const GlobalStyle = createGlobalStyle`
 
     }
 
+    .purple {
+        color: var(--purple);
+    }
+
     .app-container {
         padding: 1rem;
         display: flex;
@@ -50,9 +55,17 @@ export const GlobalStyle = createGlobalStyle`
         flex-wrap: wrap;
     }
 
+    .flex-column {
+        display: flex;
+        flex-direction: column;
+    }
+
     .gap {
         &--sm {
             gap: 0.5rem;
+        }
+        &--m {
+            gap: 1rem;
         }
     }
 
@@ -72,6 +85,13 @@ export const GlobalStyle = createGlobalStyle`
     .mt-0 {
         margin-top: 0;
     }
+    .mt-2 {
+        margin-top: 2rem;
+    }
+
+    .mr-auto {
+        margin-right: auto;
+    }
 
     .md-width {
         max-width: 800px;
@@ -79,6 +99,15 @@ export const GlobalStyle = createGlobalStyle`
 
     .m-center {
         margin: auto;
+    }
+
+    .wr {
+        &--80 {
+            width: 80%;
+        }
+        &--100 {
+            width: 100%;
+        }
     }
 
     .text-center {
@@ -144,6 +173,35 @@ export const GlobalStyle = createGlobalStyle`
     .flex-column {
         display: flex;
         flex-direction: column;
+    }
+
+    /* Tooltip container */
+    .tooltip {
+        position: relative;
+        display: inline-block;
+    }
+
+    /* Tooltip text */
+    .tooltip .tooltiptext {
+        visibility: hidden;
+        width: 120px;
+        background-color: var(--purple);
+        color: white;
+        text-align: center;
+        padding: 5px 0;
+        border-radius: 4px;
+        
+        position: absolute;
+        z-index: 1;
+        bottom: 100%;
+        left: 50%;
+        margin-left: -60px;
+
+        font-size: 0.7rem;
+    }
+
+    .tooltip:hover .tooltiptext {
+        visibility: visible;
     }
 
 `;

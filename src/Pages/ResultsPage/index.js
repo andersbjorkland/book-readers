@@ -41,7 +41,7 @@ const ResultsPage = () => {
           let key = 0;
           const bookResults = books.map(book => {
             return (
-              <BookSummary key={key++} book={book}/>
+              <BookSummary key={key++} book={book} reviewLink={true} maxNumCategories={-1}/>
             );
           });
     

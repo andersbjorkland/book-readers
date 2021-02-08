@@ -1,15 +1,27 @@
 import styled from "styled-components";
+import LoadingIndicator from "../LoadingIndicator";
 
 const Button = styled.button`
     height: 2rem;
     background-color: white;
     color: var(--blue);
-    border: none;
+    
+    &.border {
+        border: 0.5px solid var(--blue);
+    }
+
+    &.no-border {
+        border: none;
+    }
 `;
 
-const GenericButton = (props) => {
+const GenericButton = ({ isLoading, ...props}) => {
+    if (isLoading) {
+        return <LoadingIndicator />
+    }
+
     return (
-        <Button onClick={props.onClick}>
+        <Button className={props.outline ? "border" : "no-border"} onClick={props.onClick}>
             {props.children}
         </Button>
     );
