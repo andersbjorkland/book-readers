@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import Form from "../Form";
 import LoadingIndicator from "../LoadingIndicator";
 
-const ROOT_URL = process.env.REACT_APP_ROOT_URL;
+const ROOT_URL = window.location.hostname === 'localhost' ? process.env.REACT_APP_ROOT_URL_DEV : process.env.REACT_APP_ROOT_URL;
 
 
 const Register = ({setUser}) => {
