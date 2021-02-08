@@ -82,7 +82,9 @@ const Register = ({setUser}) => {
                     <input id="password" name="password" type="password" required onKeyUp={updatePassword}/>
                 </div>
 
-                {isLoading ? <LoadingIndicator /> : <input type="submit" value="Register"/>}
+                <div className="mt-1">
+                    {isLoading ? <LoadingIndicator /> : <input type="submit" value="Register"/>}
+                </div>
                 
             </Form>
         </>
