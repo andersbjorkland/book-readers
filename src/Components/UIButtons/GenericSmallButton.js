@@ -56,11 +56,11 @@ const GenericSmallButton = ({onClick, animateOnClick, isLoading, tooltip, ...pro
         onClick();
     }
 
-    const tooltipElement = tooltip ? <div className="tooltip">{tooltip}</div> : null;
+    const tooltipElement = tooltip ? <div className="tooltiptext">{tooltip}</div> : null;
 
     return (
-        <Wrapper className={isLoading ? "animate" : ""} onClick={handleClick}>
-            {tooltipElement}
+        <Wrapper className={("tooltip ") + (isLoading && "animate")} onClick={handleClick}>
+            {isLoading ? null : tooltipElement}
             {props.children}
         </Wrapper>
     );

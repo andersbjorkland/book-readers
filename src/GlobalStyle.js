@@ -182,6 +182,12 @@ export const GlobalStyle = createGlobalStyle`
         flex-direction: column;
     }
 
+    .pointer {
+        &:hover {
+            cursor: pointer;
+        }
+    }
+
     /* Tooltip container */
     .tooltip {
         position: relative;

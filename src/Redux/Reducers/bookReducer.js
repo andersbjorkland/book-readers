@@ -1,10 +1,10 @@
-import { ADD_BOOK, ADD_BOOK_FAIL, ADD_BOOK_SUCCESS, ADD_CURRENTLY_READING, ADD_CURRENTLY_READING_FAIL, ADD_CURRENTLY_READING_SUCCESS, ADD_REVIEW_SUCCESS, LOAD_USER_DATA_SUCCESS, REMOVE_BOOK, REMOVE_BOOK_FAIL, REMOVE_BOOK_SUCCESS, REMOVE_CURRENTLY_READING, REMOVE_CURRENTLY_READING_FAIL, REMOVE_CURRENTLY_READING_SUCCESS } from "../actionTypes"
+import { ADD_BOOK, ADD_BOOK_FAIL, ADD_BOOK_SUCCESS, ADD_CURRENTLY_READING, ADD_CURRENTLY_READING_FAIL, ADD_CURRENTLY_READING_SUCCESS, ADD_REVIEW_SUCCESS, LOAD_USER_DATA_SUCCESS, REMOVE_BOOK, REMOVE_BOOK_FAIL, REMOVE_BOOK_SUCCESS, REMOVE_CURRENTLY_READING, REMOVE_CURRENTLY_READING_FAIL, REMOVE_CURRENTLY_READING_SUCCESS, REMOVE_REVIEW_FAIL, REMOVE_REVIEW_SUCCESS } from "../actionTypes"
 
 const initialState = {
-    toRead: [] || (localStorage.getItem("toRead") ? JSON.parse(localStorage.getItem("toRead")) : []),
+    toRead: localStorage.getItem("toRead") ? JSON.parse(localStorage.getItem("toRead")) : [],
     isLoading: false,
-    currentRead: [] || (localStorage.getItem("currentRead") ? JSON.parse(localStorage.getItem("currentRead")): []),
-    reviews: [] || (localStorage.getItem("reviews") ? JSON.parse(localStorage.getItem("reviews")): []),
+    currentRead: localStorage.getItem("currentRead") ? JSON.parse(localStorage.getItem("currentRead")): [],
+    reviews: localStorage.getItem("reviews") ? JSON.parse(localStorage.getItem("reviews")): [],
 }
 
 const bookReducer = (state = initialState, action) => {
@@ -15,14 +15,13 @@ const bookReducer = (state = initialState, action) => {
                 isLoading : true,
             };
         case ADD_BOOK_SUCCESS: 
-            console.log(state.currentRead);
-            console.log("Book added to to-read");
             const toRead = [...state.toRead, action.payload.book];
             const currentRead = state.currentRead.length > 0 ? [...state.currentRead].filter(book => book.id !== action.payload.book.id) : [];
             localStorage.setItem('currentRead', JSON.stringify(currentRead));
             localStorage.setItem('toRead', JSON.stringify(toRead));
 
             return {
+                ...state,
                 toRead: toRead,
                 currentRead: currentRead,
                 isLoading: false,
@@ -54,11 +53,9 @@ const bookReducer = (state = initialState, action) => {
             };
         }
         case ADD_CURRENTLY_READING: {
-            console.log(state);
             return {...state};
         }
         case ADD_CURRENTLY_READING_SUCCESS: {
-            console.log(state.currentRead);
             const currentRead = [...state.currentRead, action.payload.book];
             const toRead = state.toRead.length > 0 ? [...state.toRead].filter(book => book.id !== action.payload.book.id) : [];
             localStorage.setItem('currentRead', JSON.stringify(currentRead));
@@ -103,8 +100,6 @@ const bookReducer = (state = initialState, action) => {
             localStorage.setItem('currentRead', JSON.stringify(currentRead));
             localStorage.setItem('reviews', JSON.stringify(reviews));
 
-            console.log(reviews)
-
             return {
                 ...state,
                 toRead: [...toRead],
@@ -112,12 +107,40 @@ const bookReducer = (state = initialState, action) => {
                 reviews: [...reviews]
             }
         }
+       
         case ADD_REVIEW_SUCCESS: {
-            const review = action.payload.review;
-            console.log(review);
-            const reviews = [...state.reviews, review];
-            console.log(reviews);
+            const review = {
+                book: action.payload.review.book,
+                flairs: [...action.payload.review.impressions],
+                isDraft: action.payload.review.isDraft,
+                recommended: action.payload.review.recommend,
+                score: action.payload.review.score,
+                summary: action.payload.review.shortReview,
+                text: action.payload.review.longReview
+            };
+            const reviews = [];
+            let reviewIsAdded = false;
+            for (let i = 0; i < state.reviews.length; i++) {
+                if (state.reviews[i].book.id.localeCompare(review.book.id)) {
+                    reviews.push(review);
+                    reviewIsAdded = true;
+                } else {
+                    reviews.push(state.reviews[i]);
+                }
+            }
+            if (!reviewIsAdded) {
+                reviews.push(review);
+                reviewIsAdded = true;
+            }
+            localStorage.setItem('reviews', JSON.stringify(reviews));
 
+            return {
+                ...state,
+                reviews: reviews
+            }
+        }
+        case REMOVE_REVIEW_SUCCESS: {
+            const reviews = [...state.reviews].filter(review => review.book.id !== action.payload.review.book.id);
             localStorage.setItem('reviews', JSON.stringify(reviews));
 
             return {

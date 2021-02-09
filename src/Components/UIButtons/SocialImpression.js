@@ -112,9 +112,10 @@ export const SocialButton = ({faCode, updateImpressions, activated=false, iconOb
     );
 }
 
-const SocialImpression = ({updateImpressions}) => {
+const SocialImpression = ({updateImpressions, impressions}) => {
     let i = 0;
-    const socials = Object.keys(iconLexicon).map(icon => <SocialButton key={i++} faCode={icon} updateImpressions={updateImpressions} />)
+    console.log({impressions});
+    const socials = Object.keys(iconLexicon).map(icon => <SocialButton key={i++} activated={impressions?.includes(icon)} faCode={icon} updateImpressions={updateImpressions} />)
 
     return (
         <Wrapper>

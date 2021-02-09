@@ -10,6 +10,8 @@ import { faHandHoldingHeart, faStar } from "@fortawesome/free-solid-svg-icons";
 import { CenteredContent } from "../../Pages/PageLayout";
 import AuthorsParser from "../../Utilities/ParseAuthorsToComponent";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Link } from "react-router-dom";
+import ButtonWithLoading from "../UIButtons/ButtonWithLoading";
 
 const recommend =  {
     fa: faHandHoldingHeart,
@@ -20,13 +22,19 @@ class Review extends Component {
 
     constructor(props) {
         super(props);
+
+        const reviews = [...props.bookReducer.reviews];
+        const filteredReviews = reviews.filter(review => review.book.id === props.book.id);
+        const review = filteredReviews.length > 0 ? filteredReviews[0] : null;
+        console.log({review});
+
         this.state = {
-            score: 0,
-            impressions: [],
-            shortReview: "",
-            longReview: "",
-            isDraft: false,
-            recommend: false,
+            score: review?.score || 0,
+            impressions: review?.flairs || [],
+            shortReview: review?.summary ||"",
+            longReview: review?.text ||"",
+            isDraft: review?.isDraft ||false,
+            recommend: review?.recommended || false,
             submitting: false,
             submitSuccessful: false,
         }
@@ -120,6 +128,8 @@ class Review extends Component {
             );
         }
 
+        console.log(this.state);
+
         return (
             <Wrapper>
                 <Content>
@@ -131,21 +141,21 @@ class Review extends Component {
 
                         <div className="flex-column">
                             <label>Impressions</label>
-                            <SocialImpression updateImpressions={this.updateImpressions}  />
-                            <SocialButton faCode={recommend.fa} updateImpressions={this.updateReccomendation} iconObj={recommend} lexiconize={false} />
+                            <SocialImpression updateImpressions={this.updateImpressions} impressions={this.state.impressions} />
+                            <SocialButton faCode={recommend.fa} updateImpressions={this.updateReccomendation} activated={this.state.recommend} iconObj={recommend} lexiconize={false} />
                         </div>
 
                         <label htmlFor="short-review">One sentence review</label>
-                        <input id="short-review" type="text" onKeyUp={this.handleShortReview} />
+                        <input id="short-review" type="text" onChange={this.handleShortReview} defaultValue={this.state.shortReview} />
                         <p className="form-hint">Optional</p>
 
                         <label htmlFor="long-review">Full review</label>
-                        <textarea id="long-review" onKeyUp={this.handleLongReview}></textarea>
+                        <textarea id="long-review" onChange={this.handleLongReview} defaultValue={this.state.longReview}></textarea>
                         <p className="form-hint">Optional</p>
 
                         <div className="flex-column">
                             <label htmlFor="is-draft">Draft</label>
-                            <input id="is-draft" type="checkbox" onClick={this.handleDraft} />
+                            <input id="is-draft" type="checkbox" onChange={this.handleDraft} checked={this.state.isDraft} />
                         </div>
 
                         <GenericButton outline onClick={this.handleSubmit} isLoading={this.state.submitting}>Submit</GenericButton>
@@ -154,51 +164,6 @@ class Review extends Component {
             </Wrapper>
         );
     }
-}
-
-export const ReviewSummary = ({review}) => {
-    const book = review.book;
-
-    if (!book) {
-        console.error("No book associated with this review");
-        return null;
-    }
-
-    let stars = [];
-    for (let i = 0; i < review.score; i++) {
-        stars.push(<FontAwesomeIcon className="purple" key={i} icon={faStar} />);
-    }
-
-    const lexicon = iconLexicon;
-    let flairKey = 0;
-    const flairs = review.flairs.map(flair => <SocialButton activated={true} key={flairKey++} faCode={flair} iconObj={iconLexicon[flair]} lexiconize={false} />);
-
-
-    return (
-        <SummaryWrapper>
-            <div className="flex-row">
-                <p>
-                    {book.title} ({book.publishedAt ? book.publishedAt.substr(0, 4) : "N/A"}) by {AuthorsParser(book.authors)} 
-                </p>
-            </div>
-            <div>
-                <div className="flex-row gap--sm">
-                    {review.summary && <p><em>{review.summary}</em></p>}
-                    <p>
-                        {stars}
-                    </p>
-                </div>
-
-                {review.text && <p>review.text</p>}
-            </div>
-            {flairs && (
-                <div className="flex-row gap--sm">
-                    {flairs}
-                </div>
-            )}
-        </SummaryWrapper>
-
-    );
 }
 
 const mapStateToProps = (state) => ({

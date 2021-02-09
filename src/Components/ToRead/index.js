@@ -14,7 +14,8 @@ class ToRead extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isLoading: false
+      isLoading: false,
+      addToCurrent: false,
     }
   }
 
@@ -41,6 +42,7 @@ class ToRead extends Component {
     const token = this.props.userReducer.token;
     
     if (token) {
+      this.setState({addToCurrent: true});
       this.props.addCurrentlyReading(token, this.props.book);
     }
   }
@@ -49,18 +51,17 @@ class ToRead extends Component {
     const book = this.props.book;
     return (
         <Wrapper>
-          <ControlsContainer>
-            <Close onClose={this.handleRemove} animateOnClick={true} />
-            <Link className="button--outline button--small bg--white" to={"/details/" + this.props.book.id}><FontAwesomeIcon icon={faInfo} /></Link>
-            <Link className="button--outline button--small bg--white" to={"/review/" + this.props.book.id}><FontAwesomeIcon icon={faPencilAlt} /></Link>
-            <GenericSmallButton isLoading={false} onClick={this.addCurrentlyReading} toolTip="Add as Currently Reading"><FontAwesomeIcon icon={faBookOpen} /></GenericSmallButton>
-          </ControlsContainer>
           <div>
             <p>
               {book.title} ({book.publishedAt ? book.publishedAt.substr(0, 4) : "N/A"}) by {AuthorsParser(book.authors)} 
             </p>
           </div>
-            
+          <ControlsContainer>
+            <Close onClose={this.handleRemove} animateOnClick={true} />
+            <Link className="button--outline button--small bg--white" to={"/details/" + this.props.book.id}><FontAwesomeIcon icon={faInfo} /></Link>
+            <Link className="button--outline button--small bg--white" to={"/review/" + this.props.book.id}><FontAwesomeIcon icon={faPencilAlt} /></Link>
+            <GenericSmallButton isLoading={this.state.addToCurrent} onClick={this.addCurrentlyReading} tooltip="Add as Currently Reading"><FontAwesomeIcon icon={faBookOpen} /></GenericSmallButton>
+          </ControlsContainer>
         </Wrapper>
     );
   }

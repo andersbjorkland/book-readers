@@ -14,7 +14,6 @@ const loading = () => {
 
 export const authenticatedUser = (response) => {
     const data = response.data;
-    console.log(data);
 
     return {
         type: LOGIN_USER_SUCCESS,
@@ -68,7 +67,6 @@ export const loadUserData = (token) => {
             headers: { 'Authorization': token}
         })
         .then(response => {
-            console.log(response);
             const toReadList = response.data.toRead.map(book => ParseGoogleBookToBook(book));
             const currentReadList = response.data.currentRead.map(book => ParseGoogleBookToBook(book));
             const reviews = response.data.reviews.map(review => ({...review, book: ParseGoogleBookToBook(review.book)}))
@@ -97,15 +95,12 @@ export const unregister = (token) => {
     return function (dispatch) {
         dispatch({type: UNREGISTER_USER});
 
-        console.log("Unregistering... ");
-  
         return axios({
             method: 'get',
             url: ROOT_URL + '/user/unregister',
             headers: { 'Authorization': token}
         })
         .then(response => {
-            console.log(response);
             dispatch({
                 type: UNREGISTER_USER_SUCCESS
             });
@@ -122,7 +117,6 @@ export const unregister = (token) => {
 }
 
 export const checkTokenStillValid = (token) => {
-    console.log("Checking token: " + token);
     return function (dispatch) {
         axios({
             method: 'get',

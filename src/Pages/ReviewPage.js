@@ -8,7 +8,7 @@ import { loadUserData, logoutUser, unregister } from "../Redux/authActions";
 import { loadBookDetails } from "../Utilities/simpleActions";
 import { CenteredContent, Container, Flexed, Section, Wrapper } from "./PageLayout";
 
-const ReviewPage = () => {
+const ReviewPage = (props) => {
     const [book, setBook] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [message, setMessage] = useState(null);
@@ -21,7 +21,6 @@ const ReviewPage = () => {
             try {
                 const result = await loadBookDetails(id);
                 if (result) {
-                    console.log(result)
                     setBook(result);
                 }
             } catch (error) {

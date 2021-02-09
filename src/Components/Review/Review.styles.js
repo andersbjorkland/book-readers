@@ -13,13 +13,3 @@ export const Content = styled.div`
     min-width: 20rem;
     max-width: var(--maxWidth);
 `;
-
-export const SummaryWrapper = styled.div`
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-
-    p {
-        margin: 0;
-    }
-`;

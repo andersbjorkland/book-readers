@@ -42,7 +42,7 @@ class CurrentRead extends Component {
     
     if (token) {
       this.setState({isLoading: true});
-      this.props.addToRead(token, this.props.book);
+      let response = this.props.addToRead(token, this.props.book);
     }
   }
 
@@ -50,17 +50,17 @@ class CurrentRead extends Component {
     const book = this.props.book;
     return (
         <Wrapper>
-          <ControlsContainer>
-            <Close onClose={this.handleRemove} animateOnClick={true} />
-            <Link className="button--outline button--small bg--white" to={"/details/" + this.props.book.id}><FontAwesomeIcon icon={faInfo} /></Link>
-            <Link className="button--outline button--small bg--white" to={"/review/" + this.props.book.id}><FontAwesomeIcon icon={faPencilAlt} /></Link>
-            <GenericSmallButton isLoading={false} onClick={this.addToRead} toolTip="Move to To-read"><FontAwesomeIcon icon={faBook} /></GenericSmallButton>
-          </ControlsContainer>
           <div>
             <p>
               {book.title} ({book.publishedAt ? book.publishedAt.substr(0, 4) : "N/A"}) by {AuthorsParser(book.authors)} 
             </p>
           </div>
+          <ControlsContainer>
+            <Close onClose={this.handleRemove} animateOnClick={true} />
+            <Link className="button--outline button--small bg--white" to={"/details/" + this.props.book.id}><FontAwesomeIcon icon={faInfo} /></Link>
+            <Link className="button--outline button--small bg--white" to={"/review/" + this.props.book.id}><FontAwesomeIcon icon={faPencilAlt} /></Link>
+            <GenericSmallButton isLoading={this.state.isLoading} onClick={this.addToRead} tooltip="Move to To-read"><FontAwesomeIcon icon={faBook} /></GenericSmallButton>
+          </ControlsContainer>
             
         </Wrapper>
     );
