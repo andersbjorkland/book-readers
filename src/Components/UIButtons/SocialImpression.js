@@ -114,7 +114,6 @@ export const SocialButton = ({faCode, updateImpressions, activated=false, iconOb
 
 const SocialImpression = ({updateImpressions, impressions}) => {
     let i = 0;
-    console.log({impressions});
     const socials = Object.keys(iconLexicon).map(icon => <SocialButton key={i++} activated={impressions?.includes(icon)} faCode={icon} updateImpressions={updateImpressions} />)
 
     return (

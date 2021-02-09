@@ -128,8 +128,6 @@ class Review extends Component {
             );
         }
 
-        console.log(this.state);
-
         return (
             <Wrapper>
                 <Content>

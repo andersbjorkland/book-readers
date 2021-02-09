@@ -57,8 +57,12 @@ class ReviewSummary extends Component {
             });
 
         } else {
+            const textElements = this.review.text.split('\n').map((item, key) => {
+                return <p key={key}>{item}</p>
+            });
+
             this.setState({
-                reviewText: this.review.text,
+                reviewText: textElements,
                 textExpander: "[ < ]",
                 expanded: true
             });
@@ -80,6 +84,8 @@ class ReviewSummary extends Component {
             return null;
         }
 
+        console.log(this.state.reviewText);
+
         return (
             <SummaryWrapper>
                 <div className="flex-row">
@@ -96,7 +102,7 @@ class ReviewSummary extends Component {
                         )}
                     </div>
                 </div>
-                <div className="flex-row gap--sm">
+                <div className="flex-column gap--sm">
                     {this.state.reviewText}
                     {this.state.textExpander && <span className="pointer" onClick={this.handleReviewClick}>{this.state.textExpander}</span>}
                 </div>
