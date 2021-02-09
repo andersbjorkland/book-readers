@@ -5,6 +5,7 @@ import { loadUserData, logoutUser, unregister } from "../../Redux/authActions";
 import SearchBar from "../SearchBar";
 import Logout from "../UIButtons/Logout";
 import { LinkContainer, Nav, Wrapper } from "./NavigationBar.styles";
+import logo from "../../images/logo192.png";
 
 class NavigationBar extends Component {
 
@@ -19,7 +20,7 @@ class NavigationBar extends Component {
         return(
             <Wrapper>
                 <Nav>
-                    <div className="serif"><Link className="no-ul" to="/">Book Readers</Link></div>
+                    <div className="serif"><Link className="no-ul flex-row gap--sm" to="/"><img src={logo} alt=""/><span className="optional">Book Readers</span></Link></div>
                     <LinkContainer>
                         <SearchBar baseUrl="/search" />
                         {this.props.userReducer.user ? <Link className="button" to="/user">My Corner</Link> : null}

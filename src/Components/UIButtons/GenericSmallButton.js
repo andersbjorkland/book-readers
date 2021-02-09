@@ -52,7 +52,6 @@ const Wrapper = styled.div`
 
 const GenericSmallButton = ({onClick, animateOnClick, isLoading, tooltip, ...props}) => {
     const handleClick = () => {
-        console.log("Button was clicked.", animateOnClick);
         onClick();
     }
 

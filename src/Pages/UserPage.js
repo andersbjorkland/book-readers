@@ -2,7 +2,7 @@ import { Component } from "react";
 import { connect } from "react-redux";
 import ToRead from "../Components/ToRead";
 import { loadUserData, logoutUser, unregister } from "../Redux/authActions";
-import { Container, Section, Wrapper } from "./PageLayout";
+import { CenteredContent, Container, Section, Wrapper } from "./PageLayout";
 import ButtonWithLoading from "../Components/UIButtons/ButtonWithLoading";
 import CurrentRead from "../Components/CurrentRead";
 import ReviewSummary from "../Components/ReviewSummary";
@@ -46,27 +46,35 @@ class UserPage extends Component {
         return (
             <Wrapper>
                 <Container>
-                    <h1>User Details</h1>
-                    <p>Logged in as {this.props.userReducer.user}</p>
-                    <Section>
-                        <h2>Currently Reading</h2>
-                        <div className="flex-column gap--m">
-                            {this.props.bookReducer.currentRead ? this.props.bookReducer.currentRead.map(book => <CurrentRead key={book.id} book={book} />) : <p>Nothing here. Add a book you're currently reading.</p>}
+                    <CenteredContent>
+                        <div className="wr--100">
+                            <Section>
+                                <h1>User Details</h1>
+                                <p>Logged in as {this.props.userReducer.user}</p>
+                            </Section>
+                            <Section>
+                                <h2>Currently Reading</h2>
+                                <div className="flex-column gap--m">
+                                    {this.props.bookReducer.currentRead ? this.props.bookReducer.currentRead.map(book => <CurrentRead key={book.id} book={book} />) : <p>Nothing here. Add a book you're currently reading.</p>}
+                                </div>
+                            </Section>
+                            <Section>
+                                <h2>To-read</h2>
+                                <div className="flex-column gap--m">
+                                    {this.props.bookReducer.toRead ? this.props.bookReducer.toRead.map(book => <ToRead key={book.id} book={book} />) : <p>Nothing in your list to read.</p>}
+                                </div>
+                            </Section>
+                            <Section>
+                                <h2>Reviews</h2>
+                                <div className="flex-column gap--m">
+                                    {this.props.bookReducer.reviews && this.props.bookReducer.reviews.map(review => <ReviewSummary key={reviewId++} review={review} />) }
+                                </div>
+                            </Section>
+                            <Section>
+                                <ButtonWithLoading className="mt-2" isLoading={this.state.isLoading} onClick={this.unregister} border="var(--orange)">Unregister</ButtonWithLoading>
+                            </Section>
                         </div>
-                    </Section>
-                    <Section>
-                        <h2>To-read</h2>
-                        <div className="flex-column gap--m">
-                            {this.props.bookReducer.toRead ? this.props.bookReducer.toRead.map(book => <ToRead key={book.id} book={book} />) : <p>Nothing in your list to read.</p>}
-                        </div>
-                    </Section>
-                    <Section>
-                        <h2>Reviews</h2>
-                        <div className="flex-column gap--m">
-                            {this.props.bookReducer.reviews && this.props.bookReducer.reviews.map(review => <ReviewSummary key={reviewId++} review={review} />) }
-                        </div>
-                    </Section>
-                    <ButtonWithLoading className="mt-2" isLoading={this.state.isLoading} onClick={this.unregister} border="var(--orange)">Unregister</ButtonWithLoading>
+                    </CenteredContent>
                 </Container>
             </Wrapper>
         );

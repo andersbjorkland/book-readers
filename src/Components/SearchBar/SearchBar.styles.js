@@ -9,5 +9,9 @@ export const Wrapper = styled.div`
         border-color: var(--blue);
         border-width: 1.5px;
         border-right: none;
+
+        @media screen and (max-width: 680px) {
+            max-width: 8rem;
+        }
     }
 `;

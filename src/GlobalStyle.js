@@ -57,6 +57,7 @@ export const GlobalStyle = createGlobalStyle`
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
+        align-items: center;
     }
 
     .flex-column {
@@ -191,7 +192,6 @@ export const GlobalStyle = createGlobalStyle`
     /* Tooltip container */
     .tooltip {
         position: relative;
-        display: inline-block;
     }
 
     /* Tooltip text */

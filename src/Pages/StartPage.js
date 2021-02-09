@@ -18,8 +18,10 @@ const Hero = styled.div`
     }
 
     max-width: 40rem;
-    height: 20rem;
+    height: fit-content;
     padding: 2rem;
+
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.2);
 `;
 
 const StartPage = (props) => {

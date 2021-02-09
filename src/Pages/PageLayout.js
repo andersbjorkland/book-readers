@@ -36,7 +36,9 @@ export const CenteredContent = styled.div`
 `;
 
 export const Section = styled.section`
-    margin: 2rem 0;
+    margin: 2rem auto;
+    width: 100%;
+    max-width: 800px;
     
     h2 {
         margin-bottom: 0;

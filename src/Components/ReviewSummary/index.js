@@ -71,7 +71,6 @@ class ReviewSummary extends Component {
 
     handleDelete = () => {
         let answer = window.confirm("You are about to delete this review.");
-        console.log({answer});
         if (answer) {
             this.setState({isRemoving: true});
             this.props.removeReview(this.props.userReducer.token, this.book, this.review);
@@ -83,8 +82,6 @@ class ReviewSummary extends Component {
             console.error("No book associated with this review");
             return null;
         }
-
-        console.log(this.state.reviewText);
 
         return (
             <SummaryWrapper>
