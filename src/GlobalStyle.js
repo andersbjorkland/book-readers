@@ -118,6 +118,13 @@ export const GlobalStyle = createGlobalStyle`
         }
     }
 
+    .w-15 {
+        width: 15rem;
+    }
+    .w-25 {
+        width: 25rem;
+    }
+
     .text-center {
         text-align: center;
     }

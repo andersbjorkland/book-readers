@@ -23,11 +23,11 @@ const LoginPage = (props) => {
               <h1>Login</h1>
               <Login props={props} />
               <p>New user? <Link to="/register">Register</Link></p>
+              <GenericButton onClick={() => setForgotten(!forgotten)}>Forgot password?</GenericButton>
+              <div className="w-25">
+                {forgotten && resetFrame}
+              </div>
             </CenteredContent>
-            <div className="flex-column">
-              <GenericButton className="mr-auto" onClick={() => setForgotten(!forgotten)}>Forgot password?</GenericButton>
-              {forgotten && resetFrame}
-            </div>
           </Container>
         </Wrapper>
     );
