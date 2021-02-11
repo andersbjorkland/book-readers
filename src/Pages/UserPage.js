@@ -1,20 +1,32 @@
 import { Component } from "react";
 import { connect } from "react-redux";
 import ToRead from "../Components/ToRead";
-import { loadUserData, logoutUser, unregister } from "../Redux/authActions";
+import GenericButton from "../Components/UIButtons/GenericButton";
+import { loadUserData, logoutUser, unregister, updatePassword } from "../Redux/authActions";
 import { CenteredContent, Container, Section, Wrapper } from "./PageLayout";
 import ButtonWithLoading from "../Components/UIButtons/ButtonWithLoading";
 import CurrentRead from "../Components/CurrentRead";
 import ReviewSummary from "../Components/ReviewSummary";
+import UpdatePasswordForm from "../Components/UpdatePasswordForm";
+import LoadingIndicator from "../Components/LoadingIndicator";
 
 class UserPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
             toReadList: null,
-            isLoading: false
+            isLoading: false,
+            updatePassword: {
+                show: false,
+                loading: false,
+                submitted: false,
+                successful: false
+            },
+            
         }
         this.unregister = this.unregister.bind(this);
+        this.updatePassword = this.updatePassword.bind(this);
+        this.handlePasswordButton = this.handlePasswordButton.bind(this);
     }
 
     componentDidMount() {
@@ -40,6 +52,51 @@ class UserPage extends Component {
         }
     }
 
+    async updatePassword(password) {
+        this.setState({
+            updatePassword: {
+                loading: true,
+                submitted: false,
+                successful: false
+            }
+        });
+        let result = await this.props.updatePassword(this.props.userReducer.token, password);
+
+        if (result.response.status < 300) {
+            this.setState({updatePassword: {
+                submitted: true,
+                successful: true,
+                loading: false
+            }});
+        }
+        if (result.response.status > 300) {
+            this.setState({updatePassword: {
+                submitted: true,
+                successful: false,
+                loading: false
+            }});
+        }
+    }
+
+    handlePasswordButton() {
+        if (this.state.updatePassword.show) {
+            this.setState({
+                updatePassword: {
+                    show: false,
+                }
+            });
+        } else {
+            this.setState({
+                updatePassword: {
+                    show: true,
+                    loading: false,
+                    submitted: false,
+                    successful: false
+                }
+            });
+        }
+    }
+
     render() {
         let reviewId = 0;
 
@@ -51,6 +108,11 @@ class UserPage extends Component {
                             <Section>
                                 <h1>User Details</h1>
                                 <p>Logged in as {this.props.userReducer.user}</p>
+                                <div className="flex-column">
+                                    <GenericButton onClick={this.handlePasswordButton}>Update Password</GenericButton>
+                                    {this.state.updatePassword.show && (this.state.updatePassword.loading ? <LoadingIndicator /> : (this.state.updatePassword.submitted ? null : <UpdatePasswordForm onSubmit={this.updatePassword} />))} 
+                                    {this.state.updatePassword.show && (this.state.updatePassword.successful && <p>Password was updated.</p>)}
+                                </div>
                             </Section>
                             <Section>
                                 <h2>Currently Reading</h2>
@@ -85,6 +147,7 @@ const mapStateToProps = (state) => ({...state});
 const mapDispatchToProps = (dispatch) => ({
     loadData: (token) => dispatch(loadUserData(token)),
     unregister: (token) => dispatch(unregister(token)),
+    updatePassword: (token, password) => dispatch(updatePassword(token, password)),
     logout: () => dispatch(logoutUser())
 })
 

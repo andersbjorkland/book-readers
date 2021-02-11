@@ -58,9 +58,7 @@ const Line = styled.div`
 const Add = ({onClick, animateOnClick}) => {
     const [shouldAnimate, setShouldAnimate] = useState(false);
     const handleClick = () => {
-        console.log("BUtton was clicked.", animateOnClick);
         if (animateOnClick) {
-            console.log("Setting animation on.");
             setShouldAnimate(true);
         }
         onClick();

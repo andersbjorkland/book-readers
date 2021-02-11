@@ -1,17 +1,13 @@
 import Form from "../Form";
-import { Component, useEffect, useState } from "react";
+import { Component} from "react";
 import Score from "../UIButtons/Score";
-import SocialImpression, { iconLexicon, SocialButton } from "../UIButtons/SocialImpression";
-import { Content, SummaryWrapper, Wrapper } from "./Review.styles";
+import SocialImpression, { SocialButton } from "../UIButtons/SocialImpression";
+import { Content, Wrapper } from "./Review.styles";
 import GenericButton from "../UIButtons/GenericButton";
 import { reviewBook } from "../../Redux/bookActions";
 import { connect } from "react-redux";
-import { faHandHoldingHeart, faStar } from "@fortawesome/free-solid-svg-icons";
+import { faHandHoldingHeart } from "@fortawesome/free-solid-svg-icons";
 import { CenteredContent } from "../../Pages/PageLayout";
-import AuthorsParser from "../../Utilities/ParseAuthorsToComponent";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Link } from "react-router-dom";
-import ButtonWithLoading from "../UIButtons/ButtonWithLoading";
 
 const recommend =  {
     fa: faHandHoldingHeart,
@@ -26,7 +22,6 @@ class Review extends Component {
         const reviews = [...props.bookReducer.reviews];
         const filteredReviews = reviews.filter(review => review.book.id === props.book.id);
         const review = filteredReviews.length > 0 ? filteredReviews[0] : null;
-        console.log({review});
 
         this.state = {
             score: review?.score || 0,

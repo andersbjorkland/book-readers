@@ -49,6 +49,19 @@ export const loginUser = ({email, password}) => {
     }
 }
 
+export const updatePassword = (token, password) => {
+    return function (dispatch) {
+        return axios({
+            method: 'post',
+            url: ROOT_URL + '/user/update-password',
+            headers: { 'Authorization': token},
+            data: {password: password}
+        })
+        .then((response) => ({response: response, isSuccess: true}))
+        .catch(error => ({response: error, isSuccess: false}));
+    }
+}
+
 export const logoutUser = () => {
     return function (dispatch) {
         localStorage.removeItem('currentUser');

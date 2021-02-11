@@ -4,6 +4,9 @@ import LoadingIndicator from "../LoadingIndicator";
 const Button = styled.button`
     height: 2rem;
     background-color: white;
+    width: fit-content;
+    padding: 0.5rem 1rem;
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.1);
     color: var(--blue);
     
     &.border {

@@ -61,9 +61,7 @@ const Line = styled.div`
 const Close = ({onClose, animateOnClick}) => {
     const [shouldAnimate, setShouldAnimate] = useState(false);
     const handleClick = () => {
-        console.log("Close was clicked.", animateOnClick);
         if (animateOnClick) {
-            console.log("Setting animation on.");
             setShouldAnimate(true);
         }
         onClose();
