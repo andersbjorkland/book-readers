@@ -7,9 +7,7 @@ import GenericButton from "../Components/UIButtons/GenericButton";
 const TARGET_URL = window.location.hostname === 'localhost' ? process.env.REACT_APP_ROOT_URL_DEV : process.env.REACT_APP_ROOT_URL;
 
 const resetFrame = (
-  <div className="flex-column">
-    <iframe title="reset-password" src={TARGET_URL + "/reset-password"} frameborder="0">...loading</iframe>
-  </div>
+    <a href={TARGET_URL + "/reset-password"}>Reset</a>
 );
 
 const LoginPage = (props) => {
@@ -22,10 +20,10 @@ const LoginPage = (props) => {
             <CenteredContent>
               <h1>Login</h1>
               <Login props={props} />
-              <p>New user? <Link to="/register">Register</Link></p>
-              <GenericButton onClick={() => setForgotten(!forgotten)}>Forgot password?</GenericButton>
-              <div className="w-25">
-                {forgotten && resetFrame}
+              <div className="flex-column">
+                <p>New user? <Link to="/register">Register</Link></p>
+                <p className="mt-0">Forgot password? {resetFrame}</p>
+                
               </div>
             </CenteredContent>
           </Container>
