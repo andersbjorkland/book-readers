@@ -4,7 +4,6 @@ import { Container, Flexed, Header, Wrapper } from "../PageLayout";
 import ParseGoogleBookToBook from "../../Utilities/ParseGoogleBookToBook";
 import ParseAuthorsToComponent from "../../Utilities/ParseAuthorsToComponent";
 import ParseCategoriesToComponent from "../../Utilities/ParseCategoriesToComponent";
-import Add from "../../Components/UIButtons/Add";
 import AddBookToRead from "../../Components/UIButtons/AddBookToRead";
 
 

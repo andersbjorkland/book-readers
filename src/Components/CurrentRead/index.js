@@ -42,7 +42,7 @@ class CurrentRead extends Component {
     
     if (token) {
       this.setState({isLoading: true});
-      let response = this.props.addToRead(token, this.props.book);
+      this.props.addToRead(token, this.props.book);
     }
   }
 

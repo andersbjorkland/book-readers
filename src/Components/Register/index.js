@@ -23,7 +23,6 @@ const Register = ({setUser}) => {
 
     const onSubmit = (event) => {
         event.preventDefault();
-        console.log("Submitting... ");
 
         if (!email || !password ) {
             console.log(" not!");
@@ -33,7 +32,6 @@ const Register = ({setUser}) => {
     }
 
     const register = () => {
-        console.log("Registering... ", {email: email, password: password});
         setIsLoading(true);
         axios({
             method: 'post',
@@ -41,13 +39,12 @@ const Register = ({setUser}) => {
             data: {email: email, password: password}
         })
         .then(response => {
-            console.log(response);
             setStatus(response.status);
             setIsLoading(false);
         })
         .catch( error => {
-            console.error(error);
             setIsLoading(false);
+            setStatus(400);
         });
     }
 

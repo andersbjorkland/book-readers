@@ -6,7 +6,6 @@ import { Content } from "../Components/Review/Review.styles";
 
 const VerifyPage = () => {
     const query = new URLSearchParams(useLocation().search);
-    const [status, setStatus] = useState(null);
     const [message, setMessage] = useState(null);
     
     useEffect(() => {
@@ -29,22 +28,17 @@ const VerifyPage = () => {
             tokenValue = tokenValue.replaceAll('+', '%2B');
             tokenValue = tokenValue.replaceAll('=', '%3D');
 
-            console.log({signatureValue, tokenValue});
-
             let parsedTarget = verificationTarget.substr(0, verificationTarget.indexOf("&signature=")) 
                 + "&signature=" + signatureValue
                 + "&token=" + tokenValue;
 
-            console.log(parsedTarget);
             axios(parsedTarget)
                 .then(response => {
-                    setStatus(response.status);
                     setMessage(response.data.message ? <p>{response.data.message}</p> : null);
                     return response;
                 });
         }
-    }
-    , []);
+    });
 
     
 

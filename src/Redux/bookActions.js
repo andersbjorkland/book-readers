@@ -33,7 +33,7 @@ export const removeBookToRead = (token, book) => {
     return function (dispatch) {
         dispatch({type: REMOVE_BOOK});
 
-        let data = axios({
+        axios({
             method: 'delete',
             url: ROOT_URL + '/user/to-read',
             headers: { 'Authorization': token},
@@ -79,7 +79,7 @@ export const removeBookCurrentRead = (token, book) => {
     return function (dispatch) {
         dispatch({type: REMOVE_CURRENTLY_READING});
 
-        let data = axios({
+        axios({
             method: 'delete',
             url: ROOT_URL + '/user/current-read',
             headers: { 'Authorization': token},

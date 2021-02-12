@@ -1,7 +1,6 @@
 import { Component } from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
-import { logout, useAuthDispatch } from "../../Context";
 import { logoutUser } from "../../Redux/authActions";
 
 const Button = styled.button`

@@ -1,10 +1,8 @@
-import {Component, useEffect, useState} from "react";
-import {useHistory, useLocation} from "react-router-dom";
+import {useEffect, useState} from "react";
 import BookSummary from "../../Components/BookSummary";
 import LoadingIndicator from "../../Components/LoadingIndicator";
 import Pagination from "../../Components/Pagination";
 import Results from "../../Components/Results";
-import SearchBar from "../../Components/SearchBar";
 import GoogleBooksSearcher from "../../Utilities/GoogleBooksSearcher";
 import {Wrapper, Container} from "../PageLayout";
 
@@ -54,7 +52,7 @@ const ResultsPage = () => {
       if (updatedQ === query.get("q")) {
         setSearchQuery(updatedQ);
       }
-    });
+    }, [query]);
 
     return (
         <Wrapper>
@@ -71,40 +69,6 @@ const ResultsPage = () => {
           </Container>
         </Wrapper>
     );
-}
-
-const RESULTS_PER_PAGE = 10;
-
-class ResultsPage2 extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      results: null,
-      isFetching: false,
-      numOfResults: null,
-      searchQuery: "",
-      currentPage: 1
-    }
-  }
-
-  render() {
-    return (
-      <Wrapper>
-          <Container>
-            {this.state.results ? <h2>Results</h2> : this.state.isFetching ? <h2>Results</h2> : null}
-            {this.state.isFetching ? <LoadingIndicator /> : <Results results={this.state.results} />}
-            
-            <Pagination 
-                resultsPerPage={RESULTS_PER_PAGE} 
-                numberOfResults={this.state.numOfResults} 
-                baseUrl={"/search?q=" + this.state.searchQuery + "&p="}
-                currentPage={this.state.currentPage}
-            />
-          </Container>
-        </Wrapper>
-    );
-  }
 }
 
 export default ResultsPage;
