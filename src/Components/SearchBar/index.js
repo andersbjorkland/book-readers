@@ -1,7 +1,7 @@
 import { useState} from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCoffee} from "@fortawesome/free-solid-svg-icons";
-import { Link, Redirect, useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { Wrapper } from "./SearchBar.styles";
 
 const SearchBar = ({baseUrl}) => {
