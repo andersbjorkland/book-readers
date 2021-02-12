@@ -5,7 +5,8 @@ import styled from "styled-components";
 const Hero = styled.div`
     font-size: 1.3rem;
     font-family: 'Crimson Text', serif;
-    background-color: var(--purple);
+    background-color: var(--darkOrange);
+    /* background-color: var(--purple); */
     color: white;
     margin-top: 2rem;
 

@@ -11,7 +11,9 @@ export const GlobalStyle = createGlobalStyle`
         --solidGreen: #31c400;
         --lightGreen: #68eded;
         --beige: #EFD6AC;
+        --whiteOrange: #eccea2;
         --orange: #C44900;
+        --darkOrange: #c54f07;
         --purple: #432534;
 
         // SIZES

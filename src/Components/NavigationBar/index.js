@@ -20,7 +20,7 @@ class NavigationBar extends Component {
         return(
             <Wrapper>
                 <Nav>
-                    <div className="serif"><Link className="no-ul flex-row gap--sm" to="/"><img src={logo} alt=""/><span className="optional">Book Readers</span></Link></div>
+                    <div className="serif brand"><Link className="no-ul flex-row gap--sm" to="/"><img src={logo} alt=""/><div className="optional">Book Readers</div></Link></div>
                     <LinkContainer>
                         <SearchBar baseUrl="/search" />
                         {this.props.userReducer.user ? <Link className="button" to="/user">My Corner</Link> : null}

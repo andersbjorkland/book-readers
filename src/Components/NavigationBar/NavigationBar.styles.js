@@ -16,12 +16,14 @@ export const Wrapper = styled.div`
         width: auto;
         max-height: 2.5rem;
 
-        padding: 0.2rem;
-        background-color: rgba(255, 255, 255, 0.4);
+        /* padding: 0.2rem; */
+        /* background-color: rgba(0, 0, 0, 0.4); */
         border-radius: 50%;
         
         @media screen and (max-width: 680px) {
             max-height: 2rem;
+            padding: 0.2rem;
+            background-color: rgba(0, 0, 0, 0.4);
         }
     }
 
@@ -32,9 +34,27 @@ export const Wrapper = styled.div`
         }
     }
 
+    .brand {
+        display: flex;
+        align-items: center;
+        background-color: rgba(0, 0, 0, 0.4);
+        border-top-left-radius: 1rem;
+        border-bottom-left-radius: 1rem;
+        padding: 0 1rem 0 0.4rem;
+
+        a {
+            font-size: 1.6rem;
+            color: var(--whiteOrange);
+        }
+    }
+
     @media screen and (max-width: 680px) {
         .optional {
             display: none;
+        }
+
+        .brand {
+            background: none;
         }
 
         font-size: 0.95rem;
